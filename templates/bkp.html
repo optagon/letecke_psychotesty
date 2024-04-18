@@ -1,0 +1,338 @@
+
+<html>
+ <head>
+  <title>Concentration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style id="compiled-css" type="text/css">
+
+#container{
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+#para{
+ font-family: Verdana, Geneva, sans-serif;
+ font-size: 0.7em;
+ font-weight: bold;
+ background-color: #666;
+ padding: 10px;
+ margin: 20px;
+ height: auto;
+ width: 90%;
+}
+
+.circle {
+   display:block;
+   position:absolute;
+   top:51%;
+   left:51%;
+   width:50px;
+   height:50px;
+   margin:-51px;
+   background:black;
+   border-radius:51%;
+   border: 1px solid transparent;
+   border-color: white;
+   text-align:center;
+   line-height:100px;
+}
+
+.deg-0 {
+   transform:translate(126px)
+}
+
+.deg-45 {
+   transform:rotate(46deg) translate(126px) rotate(-46deg);
+}
+
+.deg-90 {
+   transform:rotate(91deg) translate(126px) rotate(-91deg);
+}
+
+.deg-135 {
+   transform:rotate(136deg) translate(126px) rotate(-136deg);
+}
+
+.deg-180 {
+   transform:rotate(181deg) translate(126px) rotate(-181deg);
+}
+
+.deg-225 {
+   transform:rotate(226deg) translate(126px) rotate(-226deg);
+}
+
+.deg-270 {
+   transform:rotate(271deg) translate(126px) rotate(-271deg);
+}
+
+.deg-315 {
+   transform:rotate(316deg) translate(126px) rotate(-316deg);
+}
+
+/* CSS */
+.buttonSS {
+  background-color: #111827;
+  border: 1px solid transparent;
+  border-color: white;
+  border-radius: .75rem;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  flex: 0 0 auto;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  margin: 0 auto;
+  padding: .75rem 1.2rem;
+  text-align: center;
+  text-decoration: none #6B7280 solid;
+  text-decoration-thickness: auto;
+  transition-duration: .2s;
+  transition-property: background-color,border-color,color,fill,stroke;
+  transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 200px;
+}
+
+.buttonSS:hover {
+  background-color: #374151;
+}
+
+.buttonSS:focus {
+  box-shadow: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .buttonSS {
+    padding: .75rem 1.5rem;
+  }
+}
+
+.buttonReg {
+  background: #e62143;
+  border-radius: 11px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Mija,-apple-system,BlinkMacSystemFont,Roboto,"Roboto Slab","Droid Serif","Segoe UI",system-ui,Arial,sans-serif;
+  font-size: 1.15em;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 33.4929px;
+<!--  height: 200px;-->
+  padding: .8em 1em;
+  text-align: center;
+  text-decoration: none;
+  text-decoration-skip-ink: auto;
+  text-shadow: rgba(0, 0, 0, .3) 1px 1px 1px;
+  text-underline-offset: 1px;
+  transition: all .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 400px;
+  word-break: break-word;
+  border: 0;
+}
+
+.buttonReg:active {
+  border-color: #dadadf;
+  background-color: white;
+}
+
+.buttonReg:focus {
+  border-bottom-style: none;
+  border-color: #dadadf;
+  box-shadow: rgba(0, 0, 0, .3) 0 3px 3px inset;
+  outline: 0;
+}
+
+.buttonReg:hover {
+  border-bottom-style: none;
+  border-color: #dadada;
+}
+
+</style>
+ </head>
+ <body style="background-color:black">
+
+ <div id="container">
+     <p id="timeInfo">00:30</p>
+ </div>
+
+ <div id="container">
+    <button id="startBtn" onclick="startBtnCb()" class="buttonSS">START</button>
+    <button id="stopBtn" onclick="stopBtn()" class="buttonSS">STOP</button>
+ </div>
+
+ <div id="container">
+     <p id="stats" class="para" style="color: white"></p>
+ </div>
+
+ <div id="container">
+   <div class="circle deg-0" id="c000">
+   </div>
+   <div class="circle deg-45" id="c045">
+   </div>
+   <div class="circle deg-90" id="c090">
+   </div>
+   <div class="circle deg-135" id="c135">
+   </div>
+   <div class="circle deg-180" id="c180">
+   </div>
+   <div class="circle deg-225" id="c225">
+   </div>
+   <div class="circle deg-270" id="c270">
+   </div>
+   <div class="circle deg-315" id="c315">
+   </div>
+</div>
+
+<div id="container">
+    <p><button id="regBtn" onclick="registerTwoStepBtnCb()" class="buttonReg">TWO STEP!</button></p>
+</div>
+
+<script>
+
+    let running = false;
+    let STEP_TIME = 1000;
+    let TIME_LIMIT = 30;
+    let elapsed_time = 0;
+    let tstamp_display;
+    let tstamp_reg_twstep;
+    two_step = false;
+
+    function getTimerTimeString(){
+        let trem_secs = TIME_LIMIT - elapsed_time;
+        let minutes = Math.floor(trem_secs / 60);
+        let secs = trem_secs % 60;
+        let time_string = minutes.toString() + ":" + secs.toString();
+        return time_string;
+    }
+
+    function writeTimeString(time_string){
+        document.getElementById("timeInfo").innerHTML = "<b>" + time_string + "</b>";
+    }
+
+    function writeResults(res){
+        let str = "<b>Total two steps: " + res.total + "<br>NOK user hits: " + res.nok + "<br>OK user hits: " + res.ok + "</b>";
+        document.getElementById("stats").innerHTML = str;
+    }
+
+    function clearResults(){
+        document.getElementById("stats").innerHTML = "";
+       fetch("/reset_counters", {
+         method: "POST",
+         body: JSON.stringify("")})
+         .then(res => res.text())
+         .then(res => console.log("Clear results: ", res));
+    }
+
+    function getRemainingSeconds(){
+        rem_secs = TIME_LIMIT - elapsed_time;
+        return rem_secs;
+    }
+
+    function disableButton(btn_id){
+        btn = document.getElementById(btn_id);
+        btn.disabled = true;
+    }
+
+    function enableButton(btn_id){
+        btn = document.getElementById(btn_id);
+        btn.disabled = false;
+    }
+
+    function startBtnCb(){
+      console.log("start btn pressed");
+      clearResults();
+      elapsed_time = 0;
+      circleStep();
+      setTimeout(circleStep, STEP_TIME);
+      running = true;
+      disableButton("startBtn");
+    }
+
+    function stopBtn(){
+      console.log("stop btn pressed");
+      running = false;
+      enableButton("startBtn");
+
+     fetch("/get_stats")
+       .then(res => res.json())
+       .then(res => writeResults(res))
+       .then(res => console.log(res));
+
+    }
+
+    function registerTwoStepBtnCb(){
+        console.log("register button pushed");
+
+       fetch("/register_two_step", {
+         method: "POST",
+         body: JSON.stringify("")})
+         .then(res => res.text())
+<!--         .then(res => writeStats(res))-->
+         .then(res => console.log("Post request complete: ", res));
+
+    }
+
+    function circleStep(){
+      if(!running){
+        return;
+      }
+
+      fetch('http://localhost:5000/highlight_id')
+        .then(res => res.text())
+        .then(res => coloringStep(res));
+
+       if(running){
+         setTimeout(circleStep, STEP_TIME);
+       }
+
+    }
+
+  function coloringStep(old_new_cids){
+      let rem_seconds;
+      let time_string;
+      const strArr = old_new_cids.split(" ");
+      changeBackground(strArr[0], "black");
+      changeBackground(strArr[1], "white");
+
+      if(strArr[2] == "True"){
+        two_step = true;
+      }
+      else{
+        two_step = false;
+      }
+
+      tstamp_display = Date.now();
+      elapsed_time = elapsed_time + 1;
+      time_string = getTimerTimeString();
+      writeTimeString(time_string);
+
+      rem_seconds = getRemainingSeconds();
+      if(rem_seconds <= 0){
+        stopBtn();
+      }
+
+    }
+
+  function changeBackground(cid, color){
+        document.getElementById(cid).style.backgroundColor = color;
+    }
+
+
+ </script>
+
+ </body>
+</html>
+

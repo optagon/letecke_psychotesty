@@ -1,0 +1,26 @@
+
+SPUSTENI
+
+1. Dole na liste klikni na lupu 'hledat' a do vyhledavaciho pole zadej CMD, klikni na Command Prompt, zobrazi se cerny prikazovy radek
+
+2. Zkopiruj path adresare (pokud jej mas na plose, bude to na Windowsech pravdepodobne 
+C:\Users\TVOJE JMENO\Desktop\psychotest
+
+3. do prikazoveho radku napis 'cd' a klikni pravym tlacitkem mysi, jako by si chtel vlozit tu zkopirovanou adresu. Zmackni enter.
+
+4. Otevri Excel file 'psychosheet' v adresari. Ten vypada velmi podobne jako matice co budes mit pri testu. Srovnej si to tak aby si mel na monitoru jak ten Excelovy soubor, tak prikazovy radek.
+Prikazovy radek si muzes zvetsit CTRL + kolecko mysi
+
+5. Do prikazoveho radku napis 'py reading.py' pro cteni kombinaci 'py listening.py pro poslech kombinaci a v prikazovem radku zacnou behat kombinace, nebo ti to zacne kombinace hlasit.
+
+-------------------------------------------------------------------------------------------------
+
+TEST
+
+Zobrazi se ti nejaka kombinace, napriklad '24 48 RTU CD'. Tvym ukolem je v Excelu najit kombinace 24 RTU a 48 CD a na obe dvjokliknout (tim se ti zcervena). Test ma 50 kombinaci. V poslechovem cviceni je to to same, ale pocitac ti kombinace bude rikat.   
+
+-------------------------------------------------------------------------------------------------
+
+VYHODNOCENI
+
+V adresari je soubor results.txt, tam se kombinace zapisuji, muzes si pak porovnat s kombinacemi ktere si v Excelu zaskrtnul. NEZAPOMEN TEXT V SOUBORU POTOM MANUALNE SMAZAT!!! Ty kombinace se do nej kumulativne zapisuji. Nesmaz ale ten soubor samotny.

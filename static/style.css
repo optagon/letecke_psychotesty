@@ -1,0 +1,39 @@
+
+
+label {   display:block;
+          border:solid 0px black;
+          width: 50px;
+          height:10px;
+          margin-top:5px;
+          color:black;
+          text-align:center;
+          line-height: 8px;
+       }
+input[type=checkbox] {
+          display: none;
+       }
+
+input:checked + label:before {
+          color: grey;
+       }
+
+input:checked + label {
+          border: solid 0px #dbdbdb;
+          background: #dbdbdb;
+       }
+
+.center {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid black;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+        }

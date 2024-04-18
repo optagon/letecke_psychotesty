@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+
+
+</head>
+<body>
+
+<style type="text/css">
+	table.tableizer-table {
+		font-size: 12px;
+		border: 1px solid #CCC;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	.tableizer-table td {
+		padding: 4px;
+		margin: 3px;
+		border: 1px solid #CCC;
+	}
+	.tableizer-table th {
+		background-color: #104E8B;
+		color: #FFF;
+
+		font-weight: bold;
+	}
+</style>
+
+<br>
+ <br>
+<div>
+<div class="center">
+ <button type="button" onclick="playLoop()" class="btn btn-success" id="start-button">Start</button>
+</div>
+
+
+</div>
+<form action="/results_listening" method="POST">
+ <div class="center">
+ <button type="submit" id="submit-button" class="btn btn-danger">Ukončit test</button>
+ </div>
+
+ <script>
+
+ function playLoop () {
+ var start_button = document.getElementById('start-button');
+ var submit_button = document.getElementById('submit-button');
+ start_button.style.display = "none"
+
+ for(let i = 0; i < 10; i++) {
+  file_path = 'sounds/sound'+i+'.mp3'
+  console.log(file_path);
+
+  let audio = new Audio('../static/sounds/sound'+i+'.mp3')
+
+  setTimeout(function(){
+   audio.play();
+   if (i < 9) {
+    submit_button.style.display = "none"
+   } else {
+    submit_button.style.display = "block"
+   }
+   }, 12000 * i);
+
+ }
+};
+</script>
+
+
+<div class="center">
+<table class="tableizer-table">
+<!-- 1 row -->
+ <tr>
+ <td><input type="checkbox" value="1AB" id="1AB" name="input"/><label for="1AB">1 AB</label></td>
+
+ <td><input type="checkbox" value="38BC" id="38BC" name="input"/><label for="38BC">38 BC</label></td>
+
+ <td><input type="checkbox" value="1AC" id="1AC" name="input" /><label for="1AC">1 AC</label></td>
+
+ <td><input type="checkbox" value="38CD" id="38CD" name="input" /><label for="38CD">8 CD</label></td>
+
+ <td><input type="checkbox" value="1ABC" id="1ABC" name="input" /><label for="1ABC">1 ABC</label></td>
+
+ <td><input type="checkbox" value="38OK" id="38OK" name="input" /><label for="38OK">38 OK</label></td>
+
+<td><input type="checkbox" value="1RTU" id="1RTU" name="input" /><label for="1RTU">1 RTU</label></td>
+
+ <td><input type="checkbox" value="38RTO" id="38RTO" name="input" /><label for="38RTO">38 RTO</label></td>
+
+ <td><input type="checkbox" value="1OKR" id="1OKR" name="input" /><label for="1OKR">1 OKR</label></td>
+
+ <td><input type="checkbox" value="38CRT" id="38CRT" name="input" /><label for="38CRT">38 CRT</label></td>
+
+ <td><input type="checkbox" value="1ORT" id="1ORT" name="input" /><label for="1ORT">1 ORT</label></td>
+
+ <td><input type="checkbox" value="38TR" id="38TR" name="input" /><label for="38TR">38 TR</label></td>
+
+  <td><input type="checkbox" value="1UTZ" id="1UTZ" name="input" /><label for="1UTZ">1 UTZ</label></td>
+</tr>
+
+<!-- 2 row -->
+
+ <tr>
+  <td><input type="checkbox" value="2AB" id="2AB" name="input" /><label for="2AB">2 AB</label></td>
+  <td><input type="checkbox" value="39BC" id="39BC" name="input" /><label for="39BC">39 BC</label></td>
+  <td><input type="checkbox" value="2AC" id="2AC" name="input" /><label for="2AC">2 AC</label></td>
+  <td><input type="checkbox" value="39CD" id="39CD" name="input" /><label for="39CD">39 CD</label></td>
+  <td><input type="checkbox" value="2ABC" id="2ABC" name="input" /><label for="2ABC">2 ABC</label></td>
+  <td><input type="checkbox" value="39OK" id="39OK" name="input" /><label for="39OK">39 OK</label></td>
+  <td><input type="checkbox" value="2RTU" id="2RTU" name="input" /><label for="2RTU">2 RTU</label></td>
+  <td><input type="checkbox" value="39RTO" id="39RTO" name="input" /><label for="39RTO">39 RTO</label></td>
+  <td><input type="checkbox" value="2OKR" id="2OKR" name="input" /><label for="2OKR">2 OKR</label></td>
+  <td><input type="checkbox" value="39CRT" id="39CRT" name="input" /><label for="39CRT">39 CRT</label></td>
+  <td><input type="checkbox" value="2ORT" id="2ORT" name="input" /><label for="2ORT">2 ORT</label></td>
+  <td><input type="checkbox" value="39TR" id="39TR" name="input" /><label for="39TR">39 TR</label></td>
+  <td><input type="checkbox" value="2UTZ" id="2UTZ" name="input" /><label for="2UTZ">2 UTZ</label></td>
+ </tr>
+
+ <!-- 3 row -->
+
+ <tr>
+  <td><input type="checkbox" value="3AB" id="3AB" name="input" /><label for="3AB">3 AB</label></td>
+  <td><input type="checkbox" value="40BC" id="40BC" name="input" /><label for="40BC">40 BC</label></td>
+  <td><input type="checkbox" value="3AC" id="3AC" name="input" /><label for="3AC">3 AC</label></td>
+  <td><input type="checkbox" value="40CD" id="40CD" name="input" /><label for="40CD">40 CD</label></td>
+  <td><input type="checkbox" value="3ABC" id="3ABC" name="input" /><label for="3ABC">3 ABC</label></td>
+  <td><input type="checkbox" value="40OK" id="40OK" name="input" /><label for="40OK">40 OK</label></td>
+  <td><input type="checkbox" value="3RTU" id="3RTU" name="input" /><label for="3RTU">3 RTU</label></td>
+  <td><input type="checkbox" value="40RTO" id="40RTO" name="input" /><label for="40RTO">40 RTO</label></td>
+  <td><input type="checkbox" value="3OKR" id="3OKR" name="input" /><label for="3OKR">3 OKR</label></td>
+  <td><input type="checkbox" value="40CRT" id="40CRT" name="input" /><label for="40CRT">40 CRT</label></td>
+  <td><input type="checkbox" value="3ORT" id="3ORT" name="input" /><label for="3ORT">3 ORT</label></td>
+  <td><input type="checkbox" value="40TR" id="40TR" name="input" /><label for="40TR">40 TR</label></td>
+  <td><input type="checkbox" value="3UTZ" id="3UTZ" name="input" /><label for="3UTZ">3 UTZ</label></td>
+ </tr>
+
+ <!-- 4 row -->
+
+ <tr>
+  <td><input type="checkbox" value="4AB" id="4AB" name="input" /><label for="4AB">4 AB</label></td>
+  <td><input type="checkbox" value="41BC" id="41BC" name="input" /><label for="41BC">41 BC</label></td>
+  <td><input type="checkbox" value="4AC" id="4AC" name="input" /><label for="4AC">4 AC</label></td>
+  <td><input type="checkbox" value="41CD" id="41CD" name="input" /><label for="41CD">41 CD</label></td>
+  <td><input type="checkbox" value="4ABC" id="4ABC" name="input" /><label for="4ABC">4 ABC</label></td>
+  <td><input type="checkbox" value="41OK" id="41OK" name="input" /><label for="41OK">41 OK</label></td>
+  <td><input type="checkbox" value="4RTU" id="4RTU" name="input" /><label for="4RTU">4 RTU</label></td>
+  <td><input type="checkbox" value="41RTO" id="41RTO" name="input" /><label for="41RTO">41 RTO</label></td>
+  <td><input type="checkbox" value="4OKR" id="4OKR" name="input" /><label for="4OKR">4 OKR</label></td>
+  <td><input type="checkbox" value="41CRT" id="41CRT" name="input" /><label for="41CRT">41 CRT</label></td>
+  <td><input type="checkbox" value="4ORT" id="4ORT" name="input" /><label for="4ORT">4 ORT</label></td>
+  <td><input type="checkbox" value="41TR" id="41TR" name="input" /><label for="41TR">41 TR</label></td>
+  <td><input type="checkbox" value="4UTZ" id="4UTZ" name="input" /><label for="4UTZ">4 UTZ</label></td>
+ </tr>
+
+  <!-- 5 row  42 row-->
+
+ <tr>
+  <td><input type="checkbox" value="5AB" id="5AB" name="input" /><label for="5AB">5 AB</label></td>
+  <td><input type="checkbox" value="42BC" id="42BC" name="input" /><label for="42BC">42 BC</label></td>
+  <td><input type="checkbox" value="5AC" id="5AC" name="input" /><label for="5AC">5 AC</label></td>
+  <td><input type="checkbox" value="42CD" id="42CD" name="input" /><label for="42CD">42 CD</label></td>
+  <td><input type="checkbox" value="5ABC" id="5ABC" name="input" /><label for="5ABC">5 ABC</label></td>
+  <td><input type="checkbox" value="42OK" id="42OK" name="input" /><label for="42OK">42 OK</label></td>
+  <td><input type="checkbox" value="5RTU" id="5RTU" name="input" /><label for="5RTU">5 RTU</label></td>
+  <td><input type="checkbox" value="42RTO" id="42RTO" name="input" /><label for="42RTO">42 RTO</label></td>
+  <td><input type="checkbox" value="5OKR" id="5OKR" name="input" /><label for="5OKR">5 OKR</label></td>
+  <td><input type="checkbox" value="42CRT" id="42CRT" name="input" /><label for="42CRT">42 CRT</label></td>
+  <td><input type="checkbox" value="5ORT" id="5ORT" name="input" /><label for="5ORT">5 ORT</label></td>
+  <td><input type="checkbox" value="42TR" id="42TR" name="input" /><label for="42TR">42 TR</label></td>
+  <td><input type="checkbox" value="5UTZ" id="5UTZ" name="input" /><label for="5UTZ">5 UTZ</label></td>
+ </tr>
+
+<!-- 6 row 43 row-->
+
+ <tr>
+  <td><input type="checkbox" value="6AB" id="6AB" name="input" /><label for="6AB">6 AB</label></td>
+  <td><input type="checkbox" value="43BC" id="43BC" name="input" /><label for="43BC">43 BC</label></td>
+  <td><input type="checkbox" value="6AC" id="6AC" name="input" /><label for="6AC">6 AC</label></td>
+  <td><input type="checkbox" value="43CD" id="43CD" name="input" /><label for="43CD">43 CD</label></td>
+  <td><input type="checkbox" value="6ABC" id="6ABC" name="input" /><label for="6ABC">6 ABC</label></td>
+  <td><input type="checkbox" value="43OK" id="43OK" name="input" /><label for="43OK">43 OK</label></td>
+  <td><input type="checkbox" value="6RTU" id="6RTU" name="input" /><label for="6RTU">6 RTU</label></td>
+  <td><input type="checkbox" value="43RTO" id="43RTO" name="input" /><label for="43RTO">43 RTO</label></td>
+  <td><input type="checkbox" value="6OKR" id="6OKR" name="input" /><label for="6OKR">6 OKR</label></td>
+  <td><input type="checkbox" value="43CRT" id="43CRT" name="input" /><label for="43CRT">43 CRT</label></td>
+  <td><input type="checkbox" value="6ORT" id="6ORT" name="input" /><label for="6ORT">6 ORT</label></td>
+  <td><input type="checkbox" value="43TR" id="43TR" name="input" /><label for="43TR">43 TR</label></td>
+  <td><input type="checkbox" value="6UTZ" id="6UTZ" name="input" /><label for="6UTZ">6 UTZ</label></td>
+ </tr>
+
+ <!-- 7 row 44 row-->
+
+ <tr>
+  <td><input type="checkbox" value="7AB" id="7AB" name="input" /><label for="7AB">7 AB</label></td>
+  <td><input type="checkbox" value="44BC" id="44BC" name="input" /><label for="44BC">44 BC</label></td>
+  <td><input type="checkbox" value="7AC" id="7AC" name="input" /><label for="7AC">7 AC</label></td>
+  <td><input type="checkbox" value="44CD" id="44CD" name="input" /><label for="44CD">44 CD</label></td>
+  <td><input type="checkbox" value="7ABC" id="7ABC" name="input" /><label for="7ABC">7 ABC</label></td>
+  <td><input type="checkbox" value="44OK" id="44OK" name="input" /><label for="44OK">44 OK</label></td>
+  <td><input type="checkbox" value="7RTU" id="7RTU" name="input" /><label for="7RTU">7 RTU</label></td>
+  <td><input type="checkbox" value="44RTO" id="44RTO" name="input" /><label for="44RTO">44 RTO</label></td>
+  <td><input type="checkbox" value="7OKR" id="7OKR" name="input" /><label for="7OKR">7 OKR</label></td>
+  <td><input type="checkbox" value="44CRT" id="44CRT" name="input" /><label for="44CRT">44 CRT</label></td>
+  <td><input type="checkbox" value="7ORT" id="7ORT" name="input" /><label for="7ORT">7 ORT</label></td>
+  <td><input type="checkbox" value="44TR" id="44TR" name="input" /><label for="44TR">44 TR</label></td>
+  <td><input type="checkbox" value="7UTZ" id="7UTZ" name="input" /><label for="7UTZ">7 UTZ</label></td>
+ </tr>
+
+  <!-- 8 row 45 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="8AB" id="8AB" name="input" /><label for="8AB">8 AB</label></td>
+  <td><input type="checkbox" value="45BC" id="45BC" name="input" /><label for="45BC">45 BC</label></td>
+  <td><input type="checkbox" value="8AC" id="8AC" name="input" /><label for="8AC">8 AC</label></td>
+  <td><input type="checkbox" value="45CD" id="45CD" name="input" /><label for="45CD">45 CD</label></td>
+  <td><input type="checkbox" value="8ABC" id="8ABC" name="input" /><label for="8ABC">8 ABC</label></td>
+  <td><input type="checkbox" value="45OK" id="45OK" name="input" /><label for="45OK">45 OK</label></td>
+  <td><input type="checkbox" value="8RTU" id="8RTU" name="input" /><label for="8RTU">8 RTU</label></td>
+  <td><input type="checkbox" value="45RTO" id="45RTO" name="input" /><label for="45RTO">45 RTO</label></td>
+  <td><input type="checkbox" value="8OKR" id="8OKR" name="input" /><label for="8OKR">8 OKR</label></td>
+  <td><input type="checkbox" value="45CRT" id="45CRT" name="input" /><label for="45CRT">45 CRT</label></td>
+  <td><input type="checkbox" value="8ORT" id="8ORT" name="input" /><label for="8ORT">8 ORT</label></td>
+  <td><input type="checkbox" value="45TR" id="45TR" name="input" /><label for="45TR">45 TR</label></td>
+  <td><input type="checkbox" value="8UTZ" id="8UTZ" name="input" /><label for="8UTZ">8 UTZ</label></td>
+ </tr>
+
+ <!-- 9 row 46 row-->
+
+ <tr>
+  <td><input type="checkbox" value="9AB" id="9AB" name="input" /><label for="9AB">9 AB</label></td>
+  <td><input type="checkbox" value="46BC" id="46BC" name="input" /><label for="46BC">46 BC</label></td>
+  <td><input type="checkbox" value="9AC" id="9AC" name="input" /><label for="9AC">9 AC</label></td>
+  <td><input type="checkbox" value="46CD" id="46CD" name="input" /><label for="46CD">46 CD</label></td>
+  <td><input type="checkbox" value="9ABC" id="9ABC" name="input" /><label for="9ABC">9 ABC</label></td>
+  <td><input type="checkbox" value="46OK" id="46OK" name="input" /><label for="46OK">46 OK</label></td>
+  <td><input type="checkbox" value="9RTU" id="9RTU" name="input" /><label for="9RTU">9 RTU</label></td>
+  <td><input type="checkbox" value="46RTO" id="46RTO" name="input" /><label for="46RTO">46 RTO</label></td>
+  <td><input type="checkbox" value="9OKR" id="9OKR" name="input" /><label for="9OKR">9 OKR</label></td>
+  <td><input type="checkbox" value="46CRT" id="46CRT" name="input" /><label for="46CRT">46 CRT</label></td>
+  <td><input type="checkbox" value="9ORT" id="9ORT" name="input" /><label for="9ORT">9 ORT</label></td>
+  <td><input type="checkbox" value="46TR" id="46TR" name="input" /><label for="46TR">46 TR</label></td>
+  <td><input type="checkbox" value="9UTZ" id="9UTZ" name="input" /><label for="9UTZ">9 UTZ</label></td>
+ </tr>
+
+ <!-- 10 row 47 row-->
+
+ <tr>
+  <td><input type="checkbox" value="10AB" id="10AB" name="input" /><label for="10AB">10 AB</label></td>
+  <td><input type="checkbox" value="47BC" id="47BC" name="input" /><label for="47BC">47 BC</label></td>
+  <td><input type="checkbox" value="10AC" id="10AC" name="input" /><label for="10AC">10 AC</label></td>
+  <td><input type="checkbox" value="47CD" id="47CD" name="input" /><label for="47CD">47 CD</label></td>
+  <td><input type="checkbox" value="10ABC" id="10ABC" name="input" /><label for="10ABC">10 ABC</label></td>
+  <td><input type="checkbox" value="47OK" id="47OK" name="input" /><label for="47OK">47 OK</label></td>
+  <td><input type="checkbox" value="10RTU" id="10RTU" name="input" /><label for="10RTU">10 RTU</label></td>
+  <td><input type="checkbox" value="47RTO" id="47RTO" name="input" /><label for="47RTO">47 RTO</label></td>
+  <td><input type="checkbox" value="10OKR" id="10OKR" name="input" /><label for="10OKR">10 OKR</label></td>
+  <td><input type="checkbox" value="47CRT" id="47CRT" name="input" /><label for="47CRT">47 CRT</label></td>
+  <td><input type="checkbox" value="10ORT" id="10ORT" name="input" /><label for="10ORT">10 ORT</label></td>
+  <td><input type="checkbox" value="47TR" id="47TR" name="input" /><label for="47TR">47 TR</label></td>
+  <td><input type="checkbox" value="10UTZ" id="10UTZ" name="input" /><label for="10UTZ">10 UTZ</label></td>
+ </tr>
+
+  <!-- 11 row 48 row-->
+
+ <tr>
+  <td><input type="checkbox" value="11AB" id="11AB" name="input" /><label for="11AB">11 AB</label></td>
+  <td><input type="checkbox" value="48BC" id="48BC" name="input" /><label for="48BC">48 BC</label></td>
+  <td><input type="checkbox" value="11AC" id="11AC" name="input" /><label for="11AC">11 AC</label></td>
+  <td><input type="checkbox" value="48CD" id="48CD" name="input" /><label for="48CD">48 CD</label></td>
+  <td><input type="checkbox" value="11ABC" id="11ABC" name="input" /><label for="11ABC">11 ABC</label></td>
+  <td><input type="checkbox" value="48OK" id="48OK" name="input" /><label for="48OK">48 OK</label></td>
+  <td><input type="checkbox" value="11RTU" id="11RTU" name="input" /><label for="11RTU">11 RTU</label></td>
+  <td><input type="checkbox" value="48RTO" id="48RTO" name="input" /><label for="48RTO">48 RTO</label></td>
+  <td><input type="checkbox" value="11OKR" id="11OKR" name="input" /><label for="11OKR">11 OKR</label></td>
+  <td><input type="checkbox" value="48CRT" id="48CRT" name="input" /><label for="48CRT">48 CRT</label></td>
+  <td><input type="checkbox" value="11ORT" id="11ORT" name="input" /><label for="11ORT">11 ORT</label></td>
+  <td><input type="checkbox" value="48TR" id="48TR" name="input" /><label for="48TR">48 TR</label></td>
+  <td><input type="checkbox" value="11UTZ" id="11UTZ" name="input" /><label for="11UTZ">11 UTZ</label></td>
+ </tr>
+
+ <!-- 12 row 49 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="12AB" id="12AB" name="input" /><label for="12AB">12 AB</label></td>
+  <td><input type="checkbox" value="49BC" id="49BC" name="input" /><label for="49BC">49 BC</label></td>
+  <td><input type="checkbox" value="12AC" id="12AC" name="input" /><label for="12AC">12 AC</label></td>
+  <td><input type="checkbox" value="49CD" id="49CD" name="input" /><label for="49CD">49 CD</label></td>
+  <td><input type="checkbox" value="12ABC" id="12ABC" name="input" /><label for="12ABC">12 ABC</label></td>
+  <td><input type="checkbox" value="49OK" id="49OK" name="input" /><label for="49OK">49 OK</label></td>
+  <td><input type="checkbox" value="12RTU" id="12RTU" name="input" /><label for="12RTU">12 RTU</label></td>
+  <td><input type="checkbox" value="49RTO" id="49RTO" name="input" /><label for="49RTO">49 RTO</label></td>
+  <td><input type="checkbox" value="12OKR" id="12OKR" name="input" /><label for="12OKR">12 OKR</label></td>
+  <td><input type="checkbox" value="49CRT" id="49CRT" name="input" /><label for="49CRT">49 CRT</label></td>
+  <td><input type="checkbox" value="12ORT" id="12ORT" name="input" /><label for="12ORT">12 ORT</label></td>
+  <td><input type="checkbox" value="49TR" id="49TR" name="input" /><label for="49TR">49 TR</label></td>
+  <td><input type="checkbox" value="12UTZ" id="12UTZ" name="input" /><label for="12UTZ">12 UTZ</label></td>
+ </tr>
+
+  <!-- 13 row 50 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="13AB" id="13AB" name="input" /><label for="13AB">13 AB</label></td>
+  <td><input type="checkbox" value="50BC" id="50BC" name="input" /><label for="50BC">50 BC</label></td>
+  <td><input type="checkbox" value="13AC" id="13AC" name="input" /><label for="13AC">13 AC</label></td>
+  <td><input type="checkbox" value="50CD" id="50CD" name="input" /><label for="50CD">50 CD</label></td>
+  <td><input type="checkbox" value="13ABC" id="13ABC" name="input" /><label for="13ABC">13 ABC</label></td>
+  <td><input type="checkbox" value="50OK" id="50OK" name="input" /><label for="50OK">50 OK</label></td>
+  <td><input type="checkbox" value="13RTU" id="13RTU" name="input" /><label for="13RTU">13 RTU</label></td>
+  <td><input type="checkbox" value="50RTO" id="50RTO" name="input" /><label for="50RTO">50 RTO</label></td>
+  <td><input type="checkbox" value="13OKR" id="13OKR" name="input" /><label for="13OKR">13 OKR</label></td>
+  <td><input type="checkbox" value="50CRT" id="50CRT" name="input" /><label for="50CRT">50 CRT</label></td>
+  <td><input type="checkbox" value="13ORT" id="13ORT" name="input" /><label for="13ORT">13 ORT</label></td>
+  <td><input type="checkbox" value="50TR" id="50TR" name="input" /><label for="50TR">50 TR</label></td>
+  <td><input type="checkbox" value="13UTZ" id="13UTZ" name="input" /><label for="13UTZ">13 UTZ</label></td>
+ </tr>
+
+   <!-- 14 row 51 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="14AB" id="14AB" name="input" /><label for="14AB">14 AB</label></td>
+  <td><input type="checkbox" value="51BC" id="51BC" name="input" /><label for="51BC">51 BC</label></td>
+  <td><input type="checkbox" value="14AC" id="14AC" name="input" /><label for="14AC">14 AC</label></td>
+  <td><input type="checkbox" value="51CD" id="51CD" name="input" /><label for="51CD">51 CD</label></td>
+  <td><input type="checkbox" value="14ABC" id="14ABC" name="input" /><label for="14ABC">14 ABC</label></td>
+  <td><input type="checkbox" value="51OK" id="51OK" name="input" /><label for="51OK">51 OK</label></td>
+  <td><input type="checkbox" value="14RTU" id="14RTU" name="input" /><label for="14RTU">14 RTU</label></td>
+  <td><input type="checkbox" value="51RTO" id="51RTO" name="input" /><label for="51RTO">51 RTO</label></td>
+  <td><input type="checkbox" value="14OKR" id="14OKR" name="input" /><label for="14OKR">14 OKR</label></td>
+  <td><input type="checkbox" value="51CRT" id="51CRT" name="input" /><label for="51CRT">51 CRT</label></td>
+  <td><input type="checkbox" value="14ORT" id="14ORT" name="input" /><label for="14ORT">14 ORT</label></td>
+  <td><input type="checkbox" value="51TR" id="51TR" name="input" /><label for="51TR">51 TR</label></td>
+  <td><input type="checkbox" value="14UTZ" id="14UTZ" name="input" /><label for="14UTZ">14 UTZ</label></td>
+ </tr>
+
+ <!-- 15 row 52 row-->
+
+ <tr>
+  <td><input type="checkbox" value="15AB" id="15AB" name="input" /><label for="15AB">15 AB</label></td>
+  <td><input type="checkbox" value="52BC" id="52BC" name="input" /><label for="52BC">52 BC</label></td>
+  <td><input type="checkbox" value="15AC" id="15AC" name="input" /><label for="15AC">15 AC</label></td>
+  <td><input type="checkbox" value="52CD" id="52CD" name="input" /><label for="52CD">52 CD</label></td>
+  <td><input type="checkbox" value="15ABC" id="15ABC" name="input" /><label for="15ABC">15 ABC</label></td>
+  <td><input type="checkbox" value="52OK" id="52OK" name="input" /><label for="52OK">52 OK</label></td>
+  <td><input type="checkbox" value="15RTU" id="15RTU" name="input" /><label for="15RTU">15 RTU</label></td>
+  <td><input type="checkbox" value="52RTO" id="52RTO" name="input" /><label for="52RTO">52 RTO</label></td>
+  <td><input type="checkbox" value="15OKR" id="15OKR" name="input" /><label for="15OKR">15 OKR</label></td>
+  <td><input type="checkbox" value="52CRT" id="52CRT" name="input" /><label for="52CRT">52 CRT</label></td>
+  <td><input type="checkbox" value="15ORT" id="15ORT" name="input" /><label for="15ORT">15 ORT</label></td>
+  <td><input type="checkbox" value="52TR" id="52TR" name="input" /><label for="52TR">52 TR</label></td>
+  <td><input type="checkbox" value="15UTZ" id="15UTZ" name="input" /><label for="15UTZ">15 UTZ</label></td>
+ </tr>
+
+  <!-- 16 row 53 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="16AB" id="16AB" name="input" /><label for="16AB">16 AB</label></td>
+  <td><input type="checkbox" value="53BC" id="53BC" name="input" /><label for="53BC">53 BC</label></td>
+  <td><input type="checkbox" value="16AC" id="16AC" name="input" /><label for="16AC">16 AC</label></td>
+  <td><input type="checkbox" value="53CD" id="53CD" name="input" /><label for="53CD">53 CD</label></td>
+  <td><input type="checkbox" value="16ABC" id="16ABC" name="input" /><label for="16ABC">16 ABC</label></td>
+  <td><input type="checkbox" value="53OK" id="53OK" name="input" /><label for="53OK">53 OK</label></td>
+  <td><input type="checkbox" value="16RTU" id="16RTU" name="input" /><label for="16RTU">16 RTU</label></td>
+  <td><input type="checkbox" value="53RTO" id="53RTO" name="input" /><label for="53RTO">53 RTO</label></td>
+  <td><input type="checkbox" value="16OKR" id="16OKR" name="input" /><label for="16OKR">16 OKR</label></td>
+  <td><input type="checkbox" value="53CRT" id="53CRT" name="input" /><label for="53CRT">53 CRT</label></td>
+  <td><input type="checkbox" value="16ORT" id="16ORT" name="input" /><label for="16ORT">16 ORT</label></td>
+  <td><input type="checkbox" value="53TR" id="53TR" name="input" /><label for="53TR">53 TR</label></td>
+  <td><input type="checkbox" value="16UTZ" id="16UTZ" name="input" /><label for="16UTZ">16 UTZ</label></td>
+ </tr>
+
+<!-- 17 row 54 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="17AB" id="17AB" name="input" /><label for="17AB">17 AB</label></td>
+  <td><input type="checkbox" value="54BC" id="54BC" name="input" /><label for="54BC">54 BC</label></td>
+  <td><input type="checkbox" value="17AC" id="17AC" name="input" /><label for="17AC">17 AC</label></td>
+  <td><input type="checkbox" value="54CD" id="54CD" name="input" /><label for="54CD">54 CD</label></td>
+  <td><input type="checkbox" value="17ABC" id="17ABC" name="input" /><label for="17ABC">17 ABC</label></td>
+  <td><input type="checkbox" value="54OK" id="54OK" name="input" /><label for="54OK">54 OK</label></td>
+  <td><input type="checkbox" value="17RTU" id="17RTU" name="input" /><label for="17RTU">17 RTU</label></td>
+  <td><input type="checkbox" value="54RTO" id="54RTO" name="input" /><label for="54RTO">54 RTO</label></td>
+  <td><input type="checkbox" value="17OKR" id="17OKR" name="input" /><label for="17OKR">17 OKR</label></td>
+  <td><input type="checkbox" value="54CRT" id="54CRT" name="input" /><label for="54CRT">54 CRT</label></td>
+  <td><input type="checkbox" value="17ORT" id="17ORT" name="input" /><label for="17ORT">17 ORT</label></td>
+  <td><input type="checkbox" value="54TR" id="54TR" name="input" /><label for="54TR">54 TR</label></td>
+  <td><input type="checkbox" value="17UTZ" id="17UTZ" name="input" /><label for="17UTZ">17 UTZ</label></td>
+ </tr>
+
+ <!-- 18 row 55 row-->
+
+ <tr>
+  <td><input type="checkbox" value="18AB" id="18AB" name="input" /><label for="18AB">18 AB</label></td>
+  <td><input type="checkbox" value="55BC" id="55BC" name="input" /><label for="55BC">55 BC</label></td>
+  <td><input type="checkbox" value="18AC" id="18AC" name="input" /><label for="18AC">18 AC</label></td>
+  <td><input type="checkbox" value="55CD" id="55CD" name="input" /><label for="55CD">55 CD</label></td>
+  <td><input type="checkbox" value="18ABC" id="18ABC" name="input" /><label for="18ABC">18 ABC</label></td>
+  <td><input type="checkbox" value="55OK" id="55OK" name="input" /><label for="55OK">55 OK</label></td>
+  <td><input type="checkbox" value="18RTU" id="18RTU" name="input" /><label for="18RTU">18 RTU</label></td>
+  <td><input type="checkbox" value="55RTO" id="55RTO" name="input" /><label for="55RTO">55 RTO</label></td>
+  <td><input type="checkbox" value="18OKR" id="18OKR" name="input" /><label for="18OKR">18 OKR</label></td>
+  <td><input type="checkbox" value="55CRT" id="55CRT" name="input" /><label for="55CRT">55 CRT</label></td>
+  <td><input type="checkbox" value="18ORT" id="18ORT" name="input" /><label for="18ORT">18 ORT</label></td>
+  <td><input type="checkbox" value="55TR" id="55TR" name="input" /><label for="55TR">55 TR</label></td>
+  <td><input type="checkbox" value="18UTZ" id="18UTZ" name="input" /><label for="18UTZ">18 UTZ</label></td>
+ </tr>
+
+  <!-- 19 row 56 row-->
+
+ <tr>
+  <td><input type="checkbox" value="19AB" id="19AB" name="input" /><label for="19AB">19 AB</label></td>
+  <td><input type="checkbox" value="56BC" id="56BC" name="input" /><label for="56BC">56 BC</label></td>
+  <td><input type="checkbox" value="19AC" id="19AC" name="input" /><label for="19AC">19 AC</label></td>
+  <td><input type="checkbox" value="56CD" id="56CD" name="input" /><label for="56CD">56 CD</label></td>
+  <td><input type="checkbox" value="19ABC" id="19ABC" name="input" /><label for="19ABC">19 ABC</label></td>
+  <td><input type="checkbox" value="56OK" id="56OK" name="input" /><label for="56OK">56 OK</label></td>
+  <td><input type="checkbox" value="19RTU" id="19RTU" name="input" /><label for="19RTU">19 RTU</label></td>
+  <td><input type="checkbox" value="56RTO" id="56RTO" name="input" /><label for="56RTO">56 RTO</label></td>
+  <td><input type="checkbox" value="19OKR" id="19OKR" name="input" /><label for="19OKR">19 OKR</label></td>
+  <td><input type="checkbox" value="56CRT" id="56CRT" name="input" /><label for="56CRT">56 CRT</label></td>
+  <td><input type="checkbox" value="19ORT" id="19ORT" name="input" /><label for="19ORT">19 ORT</label></td>
+  <td><input type="checkbox" value="56TR" id="56TR" name="input" /><label for="56TR">56 TR</label></td>
+  <td><input type="checkbox" value="19UTZ" id="19UTZ" name="input" /><label for="19UTZ">19 UTZ</label></td>
+ </tr>
+
+   <!-- 20 row 57 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="20AB" id="20AB" name="input" /><label for="20AB">20 AB</label></td>
+  <td><input type="checkbox" value="57BC" id="57BC" name="input" /><label for="57BC">57 BC</label></td>
+  <td><input type="checkbox" value="20AC" id="20AC" name="input" /><label for="20AC">20 AC</label></td>
+  <td><input type="checkbox" value="57CD" id="57CD" name="input" /><label for="57CD">57 CD</label></td>
+  <td><input type="checkbox" value="20ABC" id="20ABC" name="input" /><label for="20ABC">20 ABC</label></td>
+  <td><input type="checkbox" value="57OK" id="57OK" name="input" /><label for="57OK">57 OK</label></td>
+  <td><input type="checkbox" value="20RTU" id="20RTU" name="input" /><label for="20RTU">20 RTU</label></td>
+  <td><input type="checkbox" value="57RTO" id="57RTO" name="input" /><label for="57RTO">57 RTO</label></td>
+  <td><input type="checkbox" value="20OKR" id="20OKR" name="input" /><label for="20OKR">20 OKR</label></td>
+  <td><input type="checkbox" value="57CRT" id="57CRT" name="input" /><label for="57CRT">57 CRT</label></td>
+  <td><input type="checkbox" value="20ORT" id="20ORT" name="input" /><label for="20ORT">20 ORT</label></td>
+  <td><input type="checkbox" value="57TR" id="57TR" name="input" /><label for="57TR">57 TR</label></td>
+  <td><input type="checkbox" value="20UTZ" id="20UTZ" name="input" /><label for="20UTZ">20 UTZ</label></td>
+ </tr>
+
+ <!-- 21 row 58 row-->
+
+ <tr>
+  <td><input type="checkbox" value="21AB" id="21AB" name="input" /><label for="21AB">21 AB</label></td>
+  <td><input type="checkbox" value="58BC" id="58BC" name="input" /><label for="58BC">58 BC</label></td>
+  <td><input type="checkbox" value="21AC" id="21AC" name="input" /><label for="21AC">21 AC</label></td>
+  <td><input type="checkbox" value="58CD" id="58CD" name="input" /><label for="58CD">58 CD</label></td>
+  <td><input type="checkbox" value="21ABC" id="21ABC" name="input" /><label for="21ABC">21 ABC</label></td>
+  <td><input type="checkbox" value="58OK" id="58OK" name="input" /><label for="58OK">58 OK</label></td>
+  <td><input type="checkbox" value="21RTU" id="21RTU" name="input" /><label for="21RTU">21 RTU</label></td>
+  <td><input type="checkbox" value="58RTO" id="58RTO" name="input" /><label for="58RTO">58 RTO</label></td>
+  <td><input type="checkbox" value="21OKR" id="21OKR" name="input" /><label for="21OKR">21 OKR</label></td>
+  <td><input type="checkbox" value="58CRT" id="58CRT" name="input" /><label for="58CRT">58 CRT</label></td>
+  <td><input type="checkbox" value="21ORT" id="21ORT" name="input" /><label for="21ORT">21 ORT</label></td>
+  <td><input type="checkbox" value="58TR" id="58TR" name="input" /><label for="58TR">58 TR</label></td>
+  <td><input type="checkbox" value="21UTZ" id="21UTZ" name="input" /><label for="21UTZ">21 UTZ</label></td>
+ </tr>
+
+ <!-- 22 row 59 row-->
+
+ <tr>
+  <td><input type="checkbox" value="22AB" id="22AB" name="input" /><label for="22AB">22 AB</label></td>
+  <td><input type="checkbox" value="59BC" id="59BC" name="input" /><label for="59BC">59 BC</label></td>
+  <td><input type="checkbox" value="22AC" id="22AC" name="input" /><label for="22AC">22 AC</label></td>
+  <td><input type="checkbox" value="59CD" id="59CD" name="input" /><label for="59CD">59 CD</label></td>
+  <td><input type="checkbox" value="22ABC" id="22ABC" name="input" /><label for="22ABC">22 ABC</label></td>
+  <td><input type="checkbox" value="59OK" id="59OK" name="input" /><label for="59OK">59 OK</label></td>
+  <td><input type="checkbox" value="22RTU" id="22RTU" name="input" /><label for="22RTU">22 RTU</label></td>
+  <td><input type="checkbox" value="59RTO" id="59RTO" name="input" /><label for="59RTO">59 RTO</label></td>
+  <td><input type="checkbox" value="22OKR" id="22OKR" name="input" /><label for="22OKR">22 OKR</label></td>
+  <td><input type="checkbox" value="59CRT" id="59CRT" name="input" /><label for="59CRT">59 CRT</label></td>
+  <td><input type="checkbox" value="22ORT" id="22ORT" name="input" /><label for="22ORT">22 ORT</label></td>
+  <td><input type="checkbox" value="59TR" id="59TR" name="input" /><label for="59TR">59 TR</label></td>
+  <td><input type="checkbox" value="22UTZ" id="22UTZ" name="input" /><label for="22UTZ">22 UTZ</label></td>
+ </tr>
+
+  <!-- 23 row 60 row-->
+
+ <tr>
+  <td><input type="checkbox" value="23AB" id="23AB" name="input" /><label for="23AB">23 AB</label></td>
+  <td><input type="checkbox" value="60BC" id="60BC" name="input" /><label for="60BC">60 BC</label></td>
+  <td><input type="checkbox" value="23AC" id="23AC" name="input" /><label for="23AC">23 AC</label></td>
+  <td><input type="checkbox" value="60CD" id="60CD" name="input" /><label for="60CD">60 CD</label></td>
+  <td><input type="checkbox" value="23ABC" id="23ABC" name="input" /><label for="23ABC">23 ABC</label></td>
+  <td><input type="checkbox" value="60OK" id="60OK" name="input" /><label for="60OK">60 OK</label></td>
+  <td><input type="checkbox" value="23RTU" id="23RTU" name="input" /><label for="23RTU">23 RTU</label></td>
+  <td><input type="checkbox" value="60RTO" id="60RTO" name="input" /><label for="60RTO">60 RTO</label></td>
+  <td><input type="checkbox" value="23OKR" id="23OKR" name="input" /><label for="23OKR">23 OKR</label></td>
+  <td><input type="checkbox" value="60CRT" id="60CRT" name="input" /><label for="60CRT">60 CRT</label></td>
+  <td><input type="checkbox" value="23ORT" id="23ORT" name="input" /><label for="23ORT">23 ORT</label></td>
+  <td><input type="checkbox" value="60TR" id="60TR" name="input" /><label for="60TR">60 TR</label></td>
+  <td><input type="checkbox" value="23UTZ" id="23UTZ" name="input" /><label for="23UTZ">23 UTZ</label></td>
+ </tr>
+
+   <!-- 24 row 61 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="24AB" id="24AB" name="input" /><label for="24AB">24 AB</label></td>
+  <td><input type="checkbox" value="61BC" id="61BC" name="input" /><label for="61BC">61 BC</label></td>
+  <td><input type="checkbox" value="24AC" id="24AC" name="input" /><label for="24AC">24 AC</label></td>
+  <td><input type="checkbox" value="61CD" id="61CD" name="input" /><label for="61CD">61 CD</label></td>
+  <td><input type="checkbox" value="24ABC" id="24ABC" name="input" /><label for="24ABC">24 ABC</label></td>
+  <td><input type="checkbox" value="61OK" id="61OK" name="input" /><label for="61OK">61 OK</label></td>
+  <td><input type="checkbox" value="24RTU" id="24RTU" name="input" /><label for="24RTU">24 RTU</label></td>
+  <td><input type="checkbox" value="61RTO" id="61RTO" name="input" /><label for="61RTO">61 RTO</label></td>
+  <td><input type="checkbox" value="24OKR" id="24OKR" name="input" /><label for="24OKR">24 OKR</label></td>
+  <td><input type="checkbox" value="61CRT" id="61CRT" name="input" /><label for="61CRT">61 CRT</label></td>
+  <td><input type="checkbox" value="24ORT" id="24ORT" name="input" /><label for="24ORT">24 ORT</label></td>
+  <td><input type="checkbox" value="61TR" id="61TR" name="input" /><label for="61TR">61 TR</label></td>
+  <td><input type="checkbox" value="24UTZ" id="24UTZ" name="input" /><label for="24UTZ">24 UTZ</label></td>
+ </tr>
+
+ <!-- 25 row 62 row-->
+
+ <tr>
+  <td><input type="checkbox" value="25AB" id="25AB" name="input" /><label for="25AB">25 AB</label></td>
+  <td><input type="checkbox" value="62BC" id="62BC" name="input" /><label for="62BC">62 BC</label></td>
+  <td><input type="checkbox" value="25AC" id="25AC" name="input" /><label for="25AC">25 AC</label></td>
+  <td><input type="checkbox" value="62CD" id="62CD" name="input" /><label for="62CD">62 CD</label></td>
+  <td><input type="checkbox" value="25ABC" id="25ABC" name="input" /><label for="25ABC">25 ABC</label></td>
+  <td><input type="checkbox" value="62OK" id="62OK" name="input" /><label for="62OK">62 OK</label></td>
+  <td><input type="checkbox" value="25RTU" id="25RTU" name="input" /><label for="25RTU">25 RTU</label></td>
+  <td><input type="checkbox" value="62RTO" id="62RTO" name="input" /><label for="62RTO">62 RTO</label></td>
+  <td><input type="checkbox" value="25OKR" id="25OKR" name="input" /><label for="25OKR">25 OKR</label></td>
+  <td><input type="checkbox" value="62CRT" id="62CRT" name="input" /><label for="62CRT">62 CRT</label></td>
+  <td><input type="checkbox" value="25ORT" id="25ORT" name="input" /><label for="25ORT">25 ORT</label></td>
+  <td><input type="checkbox" value="62TR" id="62TR" name="input" /><label for="62TR">62 TR</label></td>
+  <td><input type="checkbox" value="25UTZ" id="25UTZ" name="input" /><label for="25UTZ">25 UTZ</label></td>
+ </tr>
+
+  <!-- 26 row 63 row-->
+
+ <tr>
+  <td><input type="checkbox" value="26AB" id="26AB" name="input" /><label for="26AB">26 AB</label></td>
+  <td><input type="checkbox" value="63BC" id="63BC" name="input" /><label for="63BC">63 BC</label></td>
+  <td><input type="checkbox" value="26AC" id="26AC" name="input" /><label for="26AC">26 AC</label></td>
+  <td><input type="checkbox" value="63CD" id="63CD" name="input" /><label for="63CD">63 CD</label></td>
+  <td><input type="checkbox" value="26ABC" id="26ABC" name="input" /><label for="26ABC">26 ABC</label></td>
+  <td><input type="checkbox" value="63OK" id="63OK" name="input" /><label for="63OK">63 OK</label></td>
+  <td><input type="checkbox" value="26RTU" id="26RTU" name="input" /><label for="26RTU">26 RTU</label></td>
+  <td><input type="checkbox" value="63RTO" id="63RTO" name="input" /><label for="63RTO">63 RTO</label></td>
+  <td><input type="checkbox" value="26OKR" id="26OKR" name="input" /><label for="26OKR">26 OKR</label></td>
+  <td><input type="checkbox" value="63CRT" id="63CRT" name="input" /><label for="63CRT">63 CRT</label></td>
+  <td><input type="checkbox" value="26ORT" id="26ORT" name="input" /><label for="26ORT">26 ORT</label></td>
+  <td><input type="checkbox" value="63TR" id="63TR" name="input" /><label for="63TR">63 TR</label></td>
+  <td><input type="checkbox" value="26UTZ" id="26UTZ" name="input" /><label for="26UTZ">26 UTZ</label></td>
+ </tr>
+
+ <!-- 27 row 64 row-->
+
+ <tr>
+ <td><input type="checkbox" value="27AB" id="27AB" name="input" /><label for="27AB">27 AB</label></td>
+  <td><input type="checkbox" value="64BC" id="64BC" name="input" /><label for="64BC">64 BC</label></td>
+  <td><input type="checkbox" value="27AC" id="27AC" name="input" /><label for="27AC">27 AC</label></td>
+  <td><input type="checkbox" value="64CD" id="64CD" name="input" /><label for="64CD">64 CD</label></td>
+  <td><input type="checkbox" value="27ABC" id="27ABC" name="input" /><label for="27ABC">27 ABC</label></td>
+  <td><input type="checkbox" value="64OK" id="64OK" name="input" /><label for="64OK">64 OK</label></td>
+  <td><input type="checkbox" value="27RTU" id="27RTU" name="input" /><label for="27RTU">27 RTU</label></td>
+  <td><input type="checkbox" value="64RTO" id="64RTO" name="input" /><label for="64RTO">64 RTO</label></td>
+  <td><input type="checkbox" value="27OKR" id="27OKR" name="input" /><label for="27OKR">27 OKR</label></td>
+  <td><input type="checkbox" value="64CRT" id="64CRT" name="input" /><label for="64CRT">64 CRT</label></td>
+  <td><input type="checkbox" value="27ORT" id="27ORT" name="input" /><label for="27ORT">27 ORT</label></td>
+  <td><input type="checkbox" value="64TR" id="64TR" name="input" /><label for="64TR">64 TR</label></td>
+  <td><input type="checkbox" value="27UTZ" id="27UTZ" name="input" /><label for="27UTZ">27 UTZ</label></td>
+ </tr>
+
+  <!-- 27 row 64 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="28AB" id="28AB" name="input" /><label for="28AB">28 AB</label></td>
+  <td><input type="checkbox" value="65BC" id="65BC" name="input" /><label for="65BC">65 BC</label></td>
+  <td><input type="checkbox" value="28AC" id="28AC" name="input" /><label for="28AC">28 AC</label></td>
+  <td><input type="checkbox" value="65CD" id="65CD" name="input" /><label for="65CD">65 CD</label></td>
+  <td><input type="checkbox" value="28ABC" id="28ABC" name="input" /><label for="28ABC">28 ABC</label></td>
+  <td><input type="checkbox" value="65OK" id="65OK" name="input" /><label for="65OK">65 OK</label></td>
+  <td><input type="checkbox" value="28RTU" id="28RTU" name="input" /><label for="28RTU">28 RTU</label></td>
+  <td><input type="checkbox" value="65RTO" id="65RTO" name="input" /><label for="65RTO">65 RTO</label></td>
+  <td><input type="checkbox" value="28OKR" id="28OKR" name="input" /><label for="28OKR">28 OKR</label></td>
+  <td><input type="checkbox" value="65CRT" id="65CRT" name="input" /><label for="65CRT">65 CRT</label></td>
+  <td><input type="checkbox" value="28ORT" id="28ORT" name="input" /><label for="28ORT">28 ORT</label></td>
+  <td><input type="checkbox" value="65TR" id="65TR" name="input" /><label for="65TR">65 TR</label></td>
+  <td><input type="checkbox" value="28UTZ" id="28UTZ" name="input" /><label for="28UTZ">28 UTZ</label></td>
+ </tr>
+
+   <!-- 28 row 66 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="29AB" id="29AB" name="input" /><label for="29AB">29 AB</label></td>
+  <td><input type="checkbox" value="66BC" id="66BC" name="input" /><label for="66BC">66 BC</label></td>
+  <td><input type="checkbox" value="29AC" id="29AC" name="input" /><label for="29AC">29 AC</label></td>
+  <td><input type="checkbox" value="66CD" id="66CD" name="input" /><label for="66CD">66 CD</label></td>
+  <td><input type="checkbox" value="29ABC" id="29ABC" name="input" /><label for="29ABC">29 ABC</label></td>
+  <td><input type="checkbox" value="66OK" id="66OK" name="input" /><label for="66OK">66 OK</label></td>
+  <td><input type="checkbox" value="29RTU" id="29RTU" name="input" /><label for="29RTU">29 RTU</label></td>
+  <td><input type="checkbox" value="66RTO" id="66RTO" name="input" /><label for="66RTO">66 RTO</label></td>
+  <td><input type="checkbox" value="29OKR" id="29OKR" name="input" /><label for="29OKR">29 OKR</label></td>
+  <td><input type="checkbox" value="66CRT" id="66CRT" name="input" /><label for="66CRT">66 CRT</label></td>
+  <td><input type="checkbox" value="29ORT" id="29ORT" name="input" /><label for="29ORT">29 ORT</label></td>
+  <td><input type="checkbox" value="66TR" id="66TR" name="input" /><label for="66TR">66 TR</label></td>
+  <td><input type="checkbox" value="29UTZ" id="29UTZ" name="input" /><label for="29UTZ">29 UTZ</label></td>
+ </tr>
+
+    <!-- 29 row 67 row-->
+
+ <tr>
+  <td><input type="checkbox" value="30AB" id="30AB" name="input" /><label for="30AB">30 AB</label></td>
+  <td><input type="checkbox" value="67BC" id="67BC" name="input" /><label for="67BC">67 BC</label></td>
+  <td><input type="checkbox" value="30AC" id="30AC" name="input" /><label for="30AC">30 AC</label></td>
+  <td><input type="checkbox" value="67CD" id="67CD" name="input" /><label for="67CD">67 CD</label></td>
+  <td><input type="checkbox" value="30ABC" id="30ABC" name="input" /><label for="30ABC">30 ABC</label></td>
+  <td><input type="checkbox" value="67OK" id="67OK" name="input" /><label for="67OK">67 OK</label></td>
+  <td><input type="checkbox" value="30RTU" id="30RTU" name="input" /><label for="30RTU">30 RTU</label></td>
+  <td><input type="checkbox" value="67RTO" id="67RTO" name="input" /><label for="67RTO">67 RTO</label></td>
+  <td><input type="checkbox" value="30OKR" id="30OKR" name="input" /><label for="30OKR">30 OKR</label></td>
+  <td><input type="checkbox" value="67CRT" id="67CRT" name="input" /><label for="67CRT">67 CRT</label></td>
+  <td><input type="checkbox" value="30ORT" id="30ORT" name="input" /><label for="30ORT">30 ORT</label></td>
+  <td><input type="checkbox" value="67TR" id="67TR" name="input" /><label for="67TR">67 TR</label></td>
+  <td><input type="checkbox" value="30UTZ" id="30UTZ" name="input" /><label for="30UTZ">30 UTZ</label></td>
+ </tr>
+
+     <!-- 30 row 68 row-->
+
+ <tr>
+  <td><input type="checkbox" value="31AB" id="31AB" name="input" /><label for="31AB">31 AB</label></td>
+  <td><input type="checkbox" value="68BC" id="68BC" name="input" /><label for="68BC">68 BC</label></td>
+  <td><input type="checkbox" value="31AC" id="31AC" name="input" /><label for="31AC">31 AC</label></td>
+  <td><input type="checkbox" value="68CD" id="68CD" name="input" /><label for="68CD">68 CD</label></td>
+  <td><input type="checkbox" value="31ABC" id="31ABC" name="input" /><label for="31ABC">31 ABC</label></td>
+  <td><input type="checkbox" value="68OK" id="68OK" name="input" /><label for="68OK">68 OK</label></td>
+  <td><input type="checkbox" value="31RTU" id="31RTU" name="input" /><label for="31RTU">31 RTU</label></td>
+  <td><input type="checkbox" value="68RTO" id="68RTO" name="input" /><label for="68RTO">68 RTO</label></td>
+  <td><input type="checkbox" value="31OKR" id="31OKR" name="input" /><label for="31OKR">31 OKR</label></td>
+  <td><input type="checkbox" value="68CRT" id="68CRT" name="input" /><label for="68CRT">68 CRT</label></td>
+  <td><input type="checkbox" value="31ORT" id="31ORT" name="input" /><label for="31ORT">31 ORT</label></td>
+  <td><input type="checkbox" value="68TR" id="68TR" name="input" /><label for="68TR">68 TR</label></td>
+  <td><input type="checkbox" value="31UTZ" id="31UTZ" name="input" /><label for="31UTZ">31 UTZ</label></td>
+ </tr>
+
+ <!-- 32 row 69 row-->
+
+ <tr>
+  <td><input type="checkbox" value="32AB" id="32AB" name="input" /><label for="32AB">32 AB</label></td>
+  <td><input type="checkbox" value="69BC" id="69BC" name="input" /><label for="69BC">69 BC</label></td>
+  <td><input type="checkbox" value="32AC" id="32AC" name="input" /><label for="32AC">32 AC</label></td>
+  <td><input type="checkbox" value="69CD" id="69CD" name="input" /><label for="69CD">69 CD</label></td>
+  <td><input type="checkbox" value="32ABC" id="32ABC" name="input" /><label for="32ABC">32 ABC</label></td>
+  <td><input type="checkbox" value="69OK" id="69OK" name="input" /><label for="69OK">69 OK</label></td>
+  <td><input type="checkbox" value="32RTU" id="32RTU" name="input" /><label for="32RTU">32 RTU</label></td>
+  <td><input type="checkbox" value="69RTO" id="69RTO" name="input" /><label for="69RTO">69 RTO</label></td>
+  <td><input type="checkbox" value="32OKR" id="32OKR" name="input" /><label for="32OKR">32 OKR</label></td>
+  <td><input type="checkbox" value="69CRT" id="69CRT" name="input" /><label for="69CRT">69 CRT</label></td>
+  <td><input type="checkbox" value="32ORT" id="32ORT" name="input" /><label for="32ORT">32 ORT</label></td>
+  <td><input type="checkbox" value="69TR" id="69TR" name="input" /><label for="69TR">69 TR</label></td>
+  <td><input type="checkbox" value="32UTZ" id="32UTZ" name="input" /><label for="32UTZ">32 UTZ</label></td>
+ </tr>
+
+  <!-- 33 row 70 row-->
+
+ <tr>
+  <td><input type="checkbox" value="33AB" id="33AB" name="input" /><label for="33AB">33 AB</label></td>
+  <td><input type="checkbox" value="70BC" id="70BC" name="input" /><label for="70BC">70 BC</label></td>
+  <td><input type="checkbox" value="33AC" id="33AC" name="input" /><label for="33AC">33 AC</label></td>
+  <td><input type="checkbox" value="70CD" id="70CD" name="input" /><label for="70CD">70 CD</label></td>
+  <td><input type="checkbox" value="33ABC" id="33ABC" name="input" /><label for="33ABC">33 ABC</label></td>
+  <td><input type="checkbox" value="70OK" id="70OK" name="input" /><label for="70OK">70 OK</label></td>
+  <td><input type="checkbox" value="33RTU" id="33RTU" name="input" /><label for="33RTU">33 RTU</label></td>
+  <td><input type="checkbox" value="70RTO" id="70RTO" name="input" /><label for="70RTO">70 RTO</label></td>
+  <td><input type="checkbox" value="33OKR" id="33OKR" name="input" /><label for="33OKR">33 OKR</label></td>
+  <td><input type="checkbox" value="70CRT" id="70CRT" name="input" /><label for="70CRT">70 CRT</label></td>
+  <td><input type="checkbox" value="33ORT" id="33ORT" name="input" /><label for="33ORT">33 ORT</label></td>
+  <td><input type="checkbox" value="70TR" id="70TR" name="input" /><label for="70TR">70 TR</label></td>
+  <td><input type="checkbox" value="33UTZ" id="33UTZ" name="input" /><label for="33UTZ">33 UTZ</label></td>
+ </tr>
+
+   <!-- 34 row 71 row-->
+
+ <tr>
+  <td><input type="checkbox" value="34AB" id="34AB" name="input" /><label for="34AB">34 AB</label></td>
+  <td><input type="checkbox" value="71BC" id="71BC" name="input" /><label for="71BC">71 BC</label></td>
+  <td><input type="checkbox" value="34AC" id="34AC" name="input" /><label for="34AC">34 AC</label></td>
+  <td><input type="checkbox" value="71CD" id="71CD" name="input" /><label for="71CD">71 CD</label></td>
+  <td><input type="checkbox" value="34ABC" id="34ABC" name="input" /><label for="34ABC">34 ABC</label></td>
+  <td><input type="checkbox" value="71OK" id="71OK" name="input" /><label for="71OK">71 OK</label></td>
+  <td><input type="checkbox" value="34RTU" id="34RTU" name="input" /><label for="34RTU">34 RTU</label></td>
+  <td><input type="checkbox" value="71RTO" id="71RTO" name="input" /><label for="71RTO">71 RTO</label></td>
+  <td><input type="checkbox" value="34OKR" id="34OKR" name="input" /><label for="34OKR">34 OKR</label></td>
+  <td><input type="checkbox" value="71CRT" id="71CRT" name="input" /><label for="71CRT">71 CRT</label></td>
+  <td><input type="checkbox" value="34ORT" id="34ORT" name="input" /><label for="34ORT">34 ORT</label></td>
+  <td><input type="checkbox" value="71TR" id="71TR" name="input" /><label for="71TR">71 TR</label></td>
+  <td><input type="checkbox" value="34UTZ" id="34UTZ" name="input" /><label for="34UTZ">34 UTZ</label></td>
+ </tr>
+
+    <!-- 35 row 72 row-->
+
+
+ <tr>
+  <td><input type="checkbox" value="35AB" id="35AB" name="input" /><label for="35AB">35 AB</label></td>
+  <td><input type="checkbox" value="72BC" id="72BC" name="input" /><label for="72BC">72 BC</label></td>
+  <td><input type="checkbox" value="35AC" id="35AC" name="input" /><label for="35AC">35 AC</label></td>
+  <td><input type="checkbox" value="72CD" id="72CD" name="input" /><label for="72CD">72 CD</label></td>
+  <td><input type="checkbox" value="35ABC" id="35ABC" name="input" /><label for="35ABC">35 ABC</label></td>
+  <td><input type="checkbox" value="72OK" id="72OK" name="input" /><label for="72OK">72 OK</label></td>
+  <td><input type="checkbox" value="35RTU" id="35RTU" name="input" /><label for="35RTU">35 RTU</label></td>
+  <td><input type="checkbox" value="72RTO" id="72RTO" name="input" /><label for="72RTO">72 RTO</label></td>
+  <td><input type="checkbox" value="35OKR" id="35OKR" name="input" /><label for="35OKR">35 OKR</label></td>
+  <td><input type="checkbox" value="72CRT" id="72CRT" name="input" /><label for="72CRT">72 CRT</label></td>
+  <td><input type="checkbox" value="35ORT" id="35ORT" name="input" /><label for="35ORT">35 ORT</label></td>
+  <td><input type="checkbox" value="72TR" id="72TR" name="input" /><label for="72TR">72 TR</label></td>
+  <td><input type="checkbox" value="35UTZ" id="35UTZ" name="input" /><label for="35UTZ">35 UTZ</label></td>
+ </tr>
+
+     <!-- 36 row 73 row-->
+
+ <tr>
+  <td><input type="checkbox" value="36AB" id="36AB" name="input" /><label for="36AB">36 AB</label></td>
+  <td><input type="checkbox" value="73BC" id="73BC" name="input" /><label for="73BC">73 BC</label></td>
+  <td><input type="checkbox" value="36AC" id="36AC" name="input" /><label for="36AC">36 AC</label></td>
+  <td><input type="checkbox" value="73CD" id="73CD" name="input" /><label for="73CD">73 CD</label></td>
+  <td><input type="checkbox" value="36ABC" id="36ABC" name="input" /><label for="36ABC">36 ABC</label></td>
+  <td><input type="checkbox" value="73OK" id="73OK" name="input" /><label for="73OK">73 OK</label></td>
+  <td><input type="checkbox" value="36RTU" id="36RTU" name="input" /><label for="36RTU">36 RTU</label></td>
+  <td><input type="checkbox" value="73RTO" id="73RTO" name="input" /><label for="73RTO">73 RTO</label></td>
+  <td><input type="checkbox" value="36OKR" id="36OKR" name="input" /><label for="36OKR">36 OKR</label></td>
+  <td><input type="checkbox" value="73CRT" id="73CRT" name="input" /><label for="73CRT">73 CRT</label></td>
+  <td><input type="checkbox" value="36ORT" id="36ORT" name="input" /><label for="36ORT">36 ORT</label></td>
+  <td><input type="checkbox" value="73TR" id="73TR" name="input" /><label for="73TR">73 TR</label></td>
+  <td><input type="checkbox" value="36UTZ" id="36UTZ" name="input" /><label for="36UTZ">36 UTZ</label></td>
+ </tr>
+
+      <!-- 37 row 74 row-->
+
+ <tr>
+  <td><input type="checkbox" value="37AB" id="37AB" name="input" /><label for="37AB">37 AB</label></td>
+  <td><input type="checkbox" value="74BC" id="74BC" name="input" /><label for="74BC">74 BC</label></td>
+  <td><input type="checkbox" value="37AC" id="37AC" name="input" /><label for="37AC">37 AC</label></td>
+  <td><input type="checkbox" value="74CD" id="74CD" name="input" /><label for="74CD">74 CD</label></td>
+  <td><input type="checkbox" value="37ABC" id="37ABC" name="input" /><label for="37ABC">37 ABC</label></td>
+  <td><input type="checkbox" value="74OK" id="74OK" name="input" /><label for="74OK">74 OK</label></td>
+  <td><input type="checkbox" value="37RTU" id="37RTU" name="input" /><label for="37RTU">37 RTU</label></td>
+  <td><input type="checkbox" value="74RTO" id="74RTO" name="input" /><label for="74RTO">74 RTO</label></td>
+  <td><input type="checkbox" value="37OKR" id="37OKR" name="input" /><label for="37OKR">37 OKR</label></td>
+  <td><input type="checkbox" value="74CRT" id="74CRT" name="input" /><label for="74CRT">74 CRT</label></td>
+  <td><input type="checkbox" value="37ORT" id="37ORT" name="input" /><label for="37ORT">37 ORT</label></td>
+  <td><input type="checkbox" value="74TR" id="74TR" name="input" /><label for="74TR">74 TR</label></td>
+  <td><input type="checkbox" value="37UTZ" id="37UTZ" name="input" /><label for="37UTZ">37 UTZ</label></td>
+ </tr>
+
+</tbody></table>
+</div>
+</form>
+</body>
+</html>

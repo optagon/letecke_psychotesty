@@ -1,0 +1,20 @@
+<!-- templates/guess.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Game</title>
+</head>
+<body>
+    <h1>Guess the Symbol Location</h1>
+    <form action="/guess" method="post">
+        <p>Guess the row and column where the symbol was located:</p>
+        <label for="row">Row:</label>
+        <input type="text" id="row" name="row" required>
+        <label for="col">Column:</label>
+        <input type="text" id="col" name="col" required>
+        <input type="submit" value="Submit Guess">
+    </form>
+</body>
+</html>
