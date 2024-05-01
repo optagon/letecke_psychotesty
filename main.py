@@ -1,33 +1,124 @@
 from reading import Result
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, session, redirect, url_for
 from reading import Reading, Combination
-import os, time
+import os
+from flask_wtf import FlaskForm
 from listening import Listening
+
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import InputRequired, Length, ValidationError
+from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'database.db')
+
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+app.config['SECRET_KEY'] = 'thisissecretkey'
 SESSION_TYPE = "redis"
 PERMANENT_SESSION_LIFETIME = 1800
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 app.config.update(SECRET_KEY=os.urandom(24))
 
 final_list = []
 
-@app.route("/")
+# Create the User table if it doesn't exist
+with app.app_context():
+    db.create_all()
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+#user DB
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False, unique=True)
+    password = db.Column(db.String(80), nullable=False)
+
+class RegisterForm(FlaskForm):
+    username = StringField(validators=[
+                           InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+
+    password = PasswordField(validators=[
+                             InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
+
+    submit = SubmitField('Register')
+
+    def validate_username(self, username):
+        existing_user_username = User.query.filter_by(
+            username=username.data).first()
+        if existing_user_username:
+            raise ValidationError(
+                'That username already exists. Please choose a different one.')
+
+class LoginForm(FlaskForm):
+    username = StringField(validators=[
+                           InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+
+    password = PasswordField(validators=[
+                             InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
+
+    submit = SubmitField('Login')
+
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return User.query.get(int(user_id))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            if bcrypt.check_password_hash(user.password, form.password.data):
+                login_user(user)
+                return redirect(url_for('index'))
+    return render_template('login.html', form=form)
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+
+
+
+
+
+@app.route("/", methods=['GET', 'POST'])
+@login_required
 def index():
     return render_template('index.html')
 
 
 @app.route("/intro-reading")
+@login_required
 def intro_reading():
     return render_template("intro_reading.html")
 
 @app.route("/intro-listening")
+@login_required
 def intro_listening():
     return render_template("intro_listening.html")
 
 
 @app.route("/shortterm-memory-reading")
+@login_required
 def shortterm_memory_reading():
     list_of_combinations = []
     list_of_results = []
@@ -54,6 +145,7 @@ def shortterm_memory_reading():
     return render_template('shortterm-memory-reading.html', combinations=combinations)
 
 @app.route("/shortterm-memory-listening")
+@login_required
 def shortterm_memory_listening():
     final_list = Listening()
     session['listening_key'] = final_list
@@ -63,6 +155,7 @@ def shortterm_memory_listening():
 
 
 @app.route('/results', methods=["POST"])
+@login_required
 def form():
     if request.method == 'POST':
         user_inputs = request.form.getlist('input')
@@ -87,6 +180,7 @@ def form():
     return render_template("results.html", user_inputs=user_inputs, combinations=list_of_results, final_result=final_result, success_msg=success_msg)
 
 @app.route('/results_listening', methods=["POST"])
+@login_required
 def results_listening():
     if request.method == 'POST':
         user_inputs = []
@@ -150,17 +244,20 @@ two_step = False
 
 
 @app.route("/concentration_circle")
+@login_required
 def concentration_circle():
     return flask.render_template('concentration_circle.html')
 
 
 @app.route('/testdata')
+@login_required
 def test_data():
     print('was queried')
     return "Test data from flask!"
 
 
 @app.route('/highlight_id')
+@login_required
 def highlight_id():
     global cntr_circles
     global cmap
@@ -190,6 +287,7 @@ def highlight_id():
 
 
 @app.route('/register_two_step', methods=['POST'])
+@login_required
 def register_two_step():
     global two_step
     global cntr_two_steps
@@ -217,6 +315,7 @@ def register_two_step():
 
 
 @app.route('/reset_counters', methods=['POST'])
+@login_required
 def reset_counters():
     global cntr_two_steps
     global cntr_two_steps_user_ok
@@ -230,6 +329,7 @@ def reset_counters():
 
 
 @app.route('/get_stats')
+@login_required
 def get_stats():
     global cntr_two_steps
     global cntr_two_steps_user_ok
@@ -261,6 +361,7 @@ def get_symbol_location(grid):
 
 
 @app.route('/play', methods=['GET', 'POST'])
+@login_required
 def play():
 
     # Render play template with grid
@@ -301,12 +402,14 @@ iq_final_score = 0
 
 
 @app.route('/iq')
+@login_required
 def iq():
     iq_final_score = 0
     return render_template('iq.html', question=iqs[0]['question'])
 
 
 @app.route('/answer', methods=['POST'])
+@login_required
 def answer():
     global correct_answers, incorrect_answers, iq_final_score
     user_answer = request.form['answer']
@@ -325,6 +428,7 @@ def answer():
 
 
 @app.route('/iq_final_score')
+@login_required
 def iq_final_score():
     global correct_answers, incorrect_answers
     iq_final_score = (correct_answers / 10) * 100
@@ -349,26 +453,28 @@ maths = [
     # Add more questions here...
 ]
 
-@app.route('/math/<int:math_num>', methods=['GET', 'POST'])
-def math(math_num):
-    if 'score' not in session:
-        session['score'] = 0
-    if math_num < len(maths):
-        if request.method == 'POST':
-            user_answer_index = int(request.form['answer'])
-            correct_answer_index = maths[math_num]['options'].index(maths[math_num]['answer'])
-            if user_answer_index == correct_answer_index:
-                session['score'] += 1
-            return redirect(url_for('math_question', math_num=math_num + 1))
-        return render_template('math.html', math=maths[math_num]['question'], options=maths[math_num]['options'])
-    else:
-        return redirect(url_for('math_final_score'))
-
-@app.route('/math_final_score')
-def math_final_score():
-    math_final_score = session.get('score', 0)
-    session.pop('score', None)  # Clear the score after displaying it
-    return render_template('math_final_score.html', math_final_score=math_final_score)
+# @app.route('/math/<int:math_num>', methods=['GET', 'POST'])
+# @login_required
+# def math(math_num):
+#     if 'score' not in session:
+#         session['score'] = 0
+#     if math_num < len(maths):
+#         if request.method == 'POST':
+#             user_answer_index = int(request.form['answer'])
+#             correct_answer_index = maths[math_num]['options'].index(maths[math_num]['answer'])
+#             if user_answer_index == correct_answer_index:
+#                 session['score'] += 1
+#             return redirect(url_for('math', math_num=math_num + 1))  # Change 'math_question' to 'math'
+#         return render_template('math.html', math=maths[math_num]['question'], options=maths[math_num]['options'])
+#     else:
+#         return redirect(url_for('math_final_score'))
+#
+# @app.route('/math_final_score')
+# @login_required
+# def math_final_score():
+#     math_final_score = session.get('score', 0)
+#     session.pop('score', None)  # Clear the score after displaying it
+#     return render_template('math_final_score.html', math_final_score=math_final_score)
 
 if __name__ == "__main__":
     app.debug= True
