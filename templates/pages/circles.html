@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Koncetrace{% endblock title %}</h2>
+{% endblock header %}
+
+{% block content %}
+<style>
+  body {
+    background-color: black;
+    color: white; /* Optionally, you can set the text color to white for better visibility */
+  }
+  #container {
+    margin: 0 auto; /* Center the div horizontally */
+    text-align: center; /* Center the content inside the div */
+  }
+</style>
+
+<br>
+  <div id="container">
+    <select id="timeSelect" onchange="timeSelectCb(this)">
+      <option selected>01:00</option>
+      <option>05:00</option>
+      <option>10:00</option>
+      <option>20:00</option>
+    </select>
+    <button id="startStopBtn" onclick="startStopBtnCb()">START</button>
+    <p id="timeInfo"><b>01:00</b></p>
+  </div>
+
+  <div id="container">
+    <button id="registerBtn" onclick="registerBtnCb(this)">DVA KROKY</button>
+  </div>
+
+  <div id="container">
+    <canvas id="myCanvas" width="800" height="800"></canvas>
+  </div>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='script/circles.js') }}"></script>
+
+{% endblock content %}

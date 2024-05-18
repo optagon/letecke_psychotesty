@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Pizza</title>
+    <style>
+        body {
+            background-color: #87ceeb;
+            color: white; /* Optionally, you can set the text color to white for better visibility */
+            display: flex; /* Use flexbox */
+            flex-direction: column; /* Align children vertically */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            height: 100vh; /* Take full height of viewport */
+        }
+        #scene-container {
+            width: 150%; /* Optionally, you can specify the width */
+            max-width: 150%; /* Optionally, you can specify a maximum width */
+        }
+    </style>
+</head>
+<body>
+<h1>Psychotests ULZ</h1>
+<section>
+    <header>
+        {% block header %}{% endblock header %}
+    </header>
+    <main>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+        <div id="container2">
+            <canvas id="myChart" style="width:100%"></canvas>
+        </div>
+        <div id="container">
+            <select id="timeSelect">
+                <option value="1" selected="selected">01:00</option>
+                <option value="5">05:00</option>
+                <option value="10">10:00</option>
+                <option value="20">20:00</option>
+            </select>
+            <button id="startStopBtn">START</button>
+            <p style="display: inline" id="timeInfo"><b>01:00</b></p>
+        </div>
+
+        <div id="scene-container">
+            <!-- Your content here -->
+        </div>
+        <script type="module" src="{{ url_for('static', filename='script/pizza.js') }}"></script>
+
+    </main>
+</section>
+</body>
+{% endblock content %}

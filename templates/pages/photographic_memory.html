@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Domů{% endblock title %}</h2>
+{% endblock header %}
+
+{% block content %}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Test</title>
+<style>
+  #image-container {
+    display: none;
+  }
+</style>
+</head>
+<body>
+<div id="image-container">
+  <img id="image" src="" alt="Memory Test Image">
+</div>
+<div id="question-container" style="display: none;">
+  <h2 id="question"></h2>
+  <div id="options">
+    <button class="option" onclick="checkAnswer(0)"></button>
+    <button class="option" onclick="checkAnswer(1)"></button>
+    <button class="option" onclick="checkAnswer(2)"></button>
+  </div>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='script/photographic_memory.js') }}"></script>
+</body>
+{% endblock content %}

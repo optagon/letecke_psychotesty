@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>P*S*Y*C*H*O</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body style="background-color: black; text-align: center;">
+<h1 style="color: white;">SIGNAL</h1>
+<section>
+    <header>
+        {% block header %}{% endblock header %}
+    </header>
+  <div id="container" style="margin: 0 auto;">
+    <select id="timeSelect" onchange="timeSelectCb(this)">
+      <option value="1" selected="selected">01:00</option>
+      <option value="5">05:00</option>
+      <option value="10">10:00</option>
+      <option value="20">20:00</option>
+    </select>
+    <button id="startStopBtn" onclick="startStopBtnCb()">START</button>
+    <p id="timeInfo"><b>01:00</b></p>
+  </div>
+
+  <div id="container" style="margin: 0 auto;">
+    <button id="registerBtn" onclick="registerBtnCb(this)">ČTVEREC</button>
+  </div>
+
+  <div id="container" style="margin: 0 auto;">
+    <canvas id="myCanvas" width="1200" height="600"></canvas>
+  </div>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='script/rectangles.js') }}"></script>
+
+</section>
+</body>
+{% endblock content %}

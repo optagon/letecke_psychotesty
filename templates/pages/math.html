@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematika</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .option {
+            margin: 0 10px;
+        }
+        #score {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Matematický quiz</h1>
+    <br>
+    <div id="question"></div>
+    <div class="options">
+        <button class="option" onclick="checkAnswer(0)"></button>
+        <button class="option" onclick="checkAnswer(1)"></button>
+        <button class="option" onclick="checkAnswer(2)"></button>
+    </div>
+    <div id="score">Score: <span id="scoreValue">0</span>/10</div>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='script/math.js') }}"></script>
+</body>
+{% endblock content %}
