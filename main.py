@@ -50,10 +50,10 @@ class User(db.Model, UserMixin):
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[
-                           InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+                           InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Přihlašovací jméno"})
 
     password = PasswordField(validators=[
-                             InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
+                             InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Heslo"})
 
     submit = SubmitField('Register')
 
@@ -66,16 +66,13 @@ class RegisterForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     username = StringField(validators=[
-                           InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+                           InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Přihlašovací jméno"})
 
     password = PasswordField(validators=[
-                             InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
+                             InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Heslo"})
 
-    submit = SubmitField('Login')
+    submit = SubmitField('Přihlásit')
 
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.query.get(int(user_id))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -96,25 +93,21 @@ def logout():
     return redirect(url_for('login'))
 
 
-
-
-
-
 @app.route("/", methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template('index.html')
+    return render_template('pages/index.html')
 
 
 @app.route("/intro-reading")
 @login_required
 def intro_reading():
-    return render_template("intro_reading.html")
+    return render_template("pages/instructions/intro_reading.html")
 
 @app.route("/intro-listening")
 @login_required
 def intro_listening():
-    return render_template("intro_listening.html")
+    return render_template("pages/instructions/intro_listening.html")
 
 
 @app.route("/shortterm-memory-reading")
@@ -142,7 +135,7 @@ def shortterm_memory_reading():
     print(combinations)
     print(type(combinations))
 
-    return render_template('shortterm-memory-reading.html', combinations=combinations)
+    return render_template('pages/shortterm-memory-reading.html', combinations=combinations)
 
 @app.route("/shortterm-memory-listening")
 @login_required
@@ -150,7 +143,7 @@ def shortterm_memory_listening():
     final_list = Listening()
     session['listening_key'] = final_list
     print("results: ", final_list[1])
-    return render_template('/shortterm-memory-listening.html')
+    return render_template('pages/shortterm-memory-listening.html')
 
 
 
@@ -177,7 +170,7 @@ def form():
         else:
             success_msg = "error"
 
-    return render_template("results.html", user_inputs=user_inputs, combinations=list_of_results, final_result=final_result, success_msg=success_msg)
+    return render_template("pages/results.html", user_inputs=user_inputs, combinations=list_of_results, final_result=final_result, success_msg=success_msg)
 
 @app.route('/results_listening', methods=["POST"])
 @login_required
@@ -206,7 +199,7 @@ def results_listening():
     for i in range(10):
         os.remove("static/sounds/sound"+str(i)+".mp3")
 
-    return render_template("results_listening.html", user_inputs=user_inputs, combinations=list_of_results, final_result=final_result, success_msg=success_msg)
+    return render_template("pages/results_listening.html", user_inputs=user_inputs, combinations=list_of_results, final_result=final_result, success_msg=success_msg)
 
 
 
@@ -246,14 +239,8 @@ two_step = False
 @app.route("/concentration_circle")
 @login_required
 def concentration_circle():
-    return flask.render_template('concentration_circle.html')
+    return flask.render_template('pages/concentration_circle.html')
 
-
-@app.route('/testdata')
-@login_required
-def test_data():
-    print('was queried')
-    return "Test data from flask!"
 
 
 @app.route('/highlight_id')
@@ -360,12 +347,11 @@ def get_symbol_location(grid):
     return row, col, symbol
 
 
-@app.route('/play', methods=['GET', 'POST'])
+@app.route('/photo_memory', methods=['GET', 'POST'])
 @login_required
-def play():
-
+def photographic_memory():
     # Render play template with grid
-    return render_template('play.html')
+    return render_template('pages/photographic_memory.html')
 
 
 #IQ
@@ -404,77 +390,73 @@ iq_final_score = 0
 @app.route('/iq')
 @login_required
 def iq():
-    iq_final_score = 0
-    return render_template('iq.html', question=iqs[0]['question'])
+    return render_template('pages/iq.html')
 
 
-@app.route('/answer', methods=['POST'])
+@app.route("/circles")
+def circles():
+    return render_template("pages/circles.html")
+
+@app.route("/rectangles")
+def rectangles():
+    return render_template("pages/rectangles.html")
+
+@app.route('/math')
 @login_required
-def answer():
-    global correct_answers, incorrect_answers, iq_final_score
-    user_answer = request.form['answer']
-    correct_answer = maths[0]['answer']
+def math():
+    return render_template('pages/math.html')
 
-    if user_answer.lower() == correct_answer.lower():
-        correct_answers += 1
-    else:
-        incorrect_answers += 1
-
-    if len(iqs) == 1:
-        return redirect(url_for('iq_final_score'))
-    else:
-        iqs.pop(0)
-        return redirect(url_for('iq'))
-
-
-@app.route('/iq_final_score')
+@app.route('/kombajn')
 @login_required
-def iq_final_score():
-    global correct_answers, incorrect_answers
-    iq_final_score = (correct_answers / 10) * 100
-    return render_template('iq_final_score.html', correct=correct_answers, incorrect=incorrect_answers, score=iq_final_score)
+def kombajn():
+    return render_template('pages/kombajn.html')
 
-#mathematics
+@app.route('/pizza')
+@login_required
+def pizza():
+    return render_template('pages/pizza.html')
 
-# List of questions and their corresponding options and correct answers
-maths = [
-    {"question": "238 x 564", "options": ["134232", "73256", "12478"], "answer": "134232"},
-    {"question": "652 x 42", "options": ["64778", "27384", "112386"], "answer": "27384"},
-    {"question": "14 x 144", "options": ["202", "1424", "2016"], "answer": "2016"},
-    {"question": "89 x 89", "options": ["11589", "178", "362"], "answer": "178"},
-    {"question": "1456 x 488", "options": ["2478962", "710528", "42158"], "answer": "710528"},
-    {"question": "5145 x 43", "options": ["221235", "27394", "112486"], "answer": "221235"},
-    {"question": "3666 x 874", "options": ["3204084", "240563", "100052"], "answer": "3204084"},
-    {"question": "1111 x 111", "options": ["111111", "123456", "123321"], "answer": "123321"},
-    {"question": "4569 x 455", "options": ["207895", "2078895", "78600"], "answer": "2078895"},
-    {"question": "17 x 17", "options": ["1052", "366", "289"], "answer": "289"},
-    {"question": "2455 x 255 ", "options": ["64560", "45788", "626025"], "answer": "626025"},
+@app.route("/about")
+@login_required
+def about():
+    return render_template("pages/about.html")
 
-    # Add more questions here...
-]
+# intro pages routes
+@app.route("/intro_circles")
+@login_required
+def intro_circles():
+    return render_template("pages/instructions/intro_circles.html")
 
-# @app.route('/math/<int:math_num>', methods=['GET', 'POST'])
-# @login_required
-# def math(math_num):
-#     if 'score' not in session:
-#         session['score'] = 0
-#     if math_num < len(maths):
-#         if request.method == 'POST':
-#             user_answer_index = int(request.form['answer'])
-#             correct_answer_index = maths[math_num]['options'].index(maths[math_num]['answer'])
-#             if user_answer_index == correct_answer_index:
-#                 session['score'] += 1
-#             return redirect(url_for('math', math_num=math_num + 1))  # Change 'math_question' to 'math'
-#         return render_template('math.html', math=maths[math_num]['question'], options=maths[math_num]['options'])
-#     else:
-#         return redirect(url_for('math_final_score'))
-#
-# @app.route('/math_final_score')
-# @login_required
-# def math_final_score():
-#     math_final_score = session.get('score', 0)
-#     session.pop('score', None)  # Clear the score after displaying it
-#     return render_template('math_final_score.html', math_final_score=math_final_score)
+@app.route('/intro_photo_memory')
+@login_required
+def intro_photographic_memory():
+    return render_template('pages/instructions/intro_photo_memory.html')
+
+@app.route('/intro_iq')
+@login_required
+def intro_iq():
+    return render_template('pages/instructions/intro_iq.html')
+
+@app.route('/intro_ctverecky')
+@login_required
+def intro_ctverecky():
+    return render_template('pages/instructions/intro_ctverecky.html')
+
+@app.route('/intro_math')
+@login_required
+def intro_math():
+    return render_template('pages/instructions/intro_math.html')
+
+@app.route('/intro_kombajn')
+@login_required
+def intro_kombajn():
+    return render_template('pages/instructions/intro_kombajn.html')
+
+@app.route('/intro_pizza')
+@login_required
+def intro_pizza():
+    return render_template('pages/instructions/intro_pizza.html')
+
 
 if __name__ == "__main__":
     app.debug= True
