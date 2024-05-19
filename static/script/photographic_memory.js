@@ -1,48 +1,69 @@
-  var questions = [
-    { image: "static/images/photo_memory/beach.jpg", question: "Kolik padákových kluzáků bylo v pozadí?", options: ["3", "4", "2"], correctAnswer: 2 },
-    { image: "static/images/photo_memory/obchodnik.jpg", question: "Kolik plastových kyblíků měl obchodník na vozíku?", options: ["4", "3", "2"], correctAnswer: 1 },
-    { image: "static/images/photo_memory/people.jpg", question: "Kolik lidí bylo na obrázku?", options: ["5", "6", "7"], correctAnswer: 1 },
-    { image: "static/images/photo_memory/taxi.jpg", question: "Kolik stromů bylo na obrázku?", options: ["5", "3", "4"], correctAnswer: 1 },
-    // Add more questions as needed
-  ];
-  var currentIndex = 0;
-  var score = 0;
+const questions = [
+    {
+        img: 'static/images/photo_memory/taxi.jpg',
+        question: 'Kolik stromů je na obrázku?',
+        options: ['2', '3', '4'],
+        correct: 0
+    },
+    {
+        img: 'static/images/photo_memory/beach.jpg',
+        question: 'Kolik padákových kluzáků je na obrázku?',
+        options: ['1', '2', '3'],
+        correct: 1
+    },
+    // Add 8 more question objects with img, question, options, and correct index
+];
 
-  function startTest() {
-    if (currentIndex < questions.length) {
-      var currentQuestion = questions[currentIndex];
-      document.getElementById("image").src = currentQuestion.image;
-      document.getElementById("question").textContent = currentQuestion.question;
-      document.getElementById("image-container").style.display = "block";
-      document.getElementById("question-container").style.display = "none";
-      setTimeout(showNextQuestion, 2000);
+let currentQuestion = 0;
+let score = 0;
+
+const pictureElement = document.getElementById('picture');
+const questionElement = document.querySelector('.question');
+const optionsElement = document.querySelector('.options');
+const scoreElement = document.querySelector('.score');
+
+function showPicture() {
+    pictureElement.src = questions[currentQuestion].img;
+    pictureElement.style.display = 'block';
+    questionElement.style.display = 'none';
+    optionsElement.style.display = 'none';
+    setTimeout(showQuestion, 2000);
+}
+
+function showQuestion() {
+    pictureElement.style.display = 'none';
+    questionElement.textContent = questions[currentQuestion].question;
+    questionElement.style.display = 'block';
+    optionsElement.innerHTML = '';
+    questions[currentQuestion].options.forEach((option, index) => {
+        const optionElement = document.createElement('div');
+        optionElement.textContent = option;
+        optionElement.classList.add('option');
+        optionElement.addEventListener('click', () => checkAnswer(index));
+        optionsElement.appendChild(optionElement);
+    });
+    optionsElement.style.display = 'block';
+}
+
+function checkAnswer(selected) {
+    if (selected === questions[currentQuestion].correct) {
+        score++;
+    }
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+        showPicture();
     } else {
-      endTest();
+        showScore();
     }
-  }
+}
 
-  function showNextQuestion() {
-    document.getElementById("image-container").style.display = "none";
-    document.getElementById("question-container").style.display = "block";
-    var currentQuestion = questions[currentIndex];
-    var options = document.querySelectorAll(".option");
-    for (var i = 0; i < options.length; i++) {
-      options[i].textContent = currentQuestion.options[i];
-    }
-  }
+function showScore() {
+    pictureElement.style.display = 'none';
+    questionElement.style.display = 'none';
+    optionsElement.style.display = 'none';
+    scoreElement.textContent = `Your score: ${score} out of ${questions.length}`;
+    scoreElement.style.display = 'block';
+}
 
-  function checkAnswer(selectedAnswerIndex) {
-    var currentQuestion = questions[currentIndex];
-    if (selectedAnswerIndex === currentQuestion.correctAnswer) {
-      score++;
-    }
-    document.getElementById("score").textContent = "Score: " + score;
-    currentIndex++;
-    startTest();
-  }
-
-  function endTest() {
-    alert("Test dokončen! Vaše úspěšnost je " + score);
-  }
-
-  window.onload = startTest;
+// Start the quiz
+showPicture();

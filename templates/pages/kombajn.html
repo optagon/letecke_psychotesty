@@ -5,51 +5,43 @@
 
 {% block content %}
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Keyboard Multitasking Skills Test</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-  }
-
-  #container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-
-  #task {
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    text-align: center;
-  }
-
-  #symbol {
-    font-size: 48px;
-    margin-bottom: 20px;
-  }
-
-  #instruction {
-    margin-bottom: 20px;
-  }
-
-  #score {
-    margin-top: 20px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multitasking Test</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+        .symbol {
+            position: absolute;
+        }
+        .top-left { top: 30px; left: 30px; }
+        .top-right { top: 30px; right: 30px; }
+        .bottom-left { bottom: 30px; left: 30px; }
+        .bottom-right { bottom: 30px; right: 30px; }
+        .circle { border-radius: 50%; }
+        .rectangle { width: 50px; height: 30px; }
+        .oval { width: 60px; height: 40px; border-radius: 30px / 20px; }
+        .cross { font-size: 48px; }
+        #score {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+        }
+    </style>
 </head>
 <body>
-<div id="container">
-  <div id="task">
-    <div id="symbol"></div>
-    <p id="instruction">Press the corresponding key as soon as you see the symbol appear!</p>
-    <p id="score">Score: 0</p>
-  </div>
-</div>
+
+<audio id="audio1" src="static/kombajn_sounds/audio1.mp3"></audio>
+<audio id="audio2" src="static/kombajn_sounds/audio2.mp3"></audio>
 
 <script type="text/javascript" src="{{ url_for('static', filename='script/kombajn.js') }}"></script>
 </body>

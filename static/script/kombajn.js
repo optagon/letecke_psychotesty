@@ -1,59 +1,96 @@
-  var symbols = [
-    { symbol: "⚫", key: " ", name: "black circle" },
-    { symbol: "⚪", key: "q", name: "white circle" },
-    { symbol: "⬛", key: "p", name: "black square" },
-    { symbol: "⬜", key: "z", name: "white square" },
-    { symbol: "🔵", key: "m", name: "blue circle" }
-  ];
-  var symbolElement = document.getElementById("symbol");
-  var instructionElement = document.getElementById("instruction");
-  var scoreElement = document.getElementById("score");
-  var totalAttempts = 0;
-  var successfulAttempts = 0;
-  var timeoutId;
+    let score = 0;
+    let startTime = Date.now();
+    const testDuration = 5 * 60 * 1000; // 5 minutes
+    const symbols = [
+        { class: 'circle top-left', color: 'black', key: 'Q' },
+        { class: 'circle top-right', color: 'red', key: 'P' },
+        { class: 'rectangle bottom-left', color: 'green', key: 'Z' },
+        { class: 'oval bottom-right', color: 'yellow', key: 'M' },
+        { class: 'cross', color: 'black', key: null }
+    ];
+    const audios = [
+        { id: 'audio1', key: 'F' },
+        { id: 'audio2', key: 'H' }
+    ];
 
-  function startTask() {
-    if (totalAttempts < 20) {
-      totalAttempts++;
-      var randomIndex = Math.floor(Math.random() * symbols.length);
-      var currentSymbol = symbols[randomIndex];
-      symbolElement.textContent = currentSymbol.symbol;
-      instructionElement.textContent = "Press \"" + currentSymbol.key.toUpperCase() + "\" when you see a " + currentSymbol.name;
-      instructionElement.style.display = "block";
-      timeoutId = setTimeout(function() {
-        endAttempt(false);
-      }, 1000); // Wait for 1 second before ending the attempt
-      document.addEventListener('keydown', keyboardHandler);
-    } else {
-      endTask();
+    const scoreElement = document.getElementById('score');
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
     }
-  }
 
-  function keyboardHandler(e) {
-    var keyPressed = e.key.toLowerCase();
-    var symbol = symbolElement.textContent;
-    var correctKey = symbols.find(function(symbolObj) {
-      return symbolObj.symbol === symbol;
-    }).key.toLowerCase();
-    if (keyPressed === correctKey) {
-      endAttempt(true);
+    function showSymbol() {
+        const randomSymbol = symbols[getRandomInt(symbols.length)];
+        const symbolElement = document.createElement('div');
+        symbolElement.className = `symbol ${randomSymbol.class}`;
+        symbolElement.style.backgroundColor = randomSymbol.color;
+        symbolElement.innerHTML = randomSymbol.class.includes('cross') ? '✖' : '';
+        document.body.appendChild(symbolElement);
+
+        const displayTime = Math.max(1500 - ((Date.now() - startTime) / 1000 / 5) * 1000, 500);
+
+        let keyPressListener = (event) => {
+            if (randomSymbol.key && event.key.toUpperCase() === randomSymbol.key) {
+                score++;
+            } else if (!randomSymbol.class.includes('cross')) {
+                score--;
+            } else {
+                score--;
+            }
+            updateScore();
+        };
+
+        document.addEventListener('keydown', keyPressListener, { once: true });
+
+        setTimeout(() => {
+            if (symbolElement) {
+                document.body.removeChild(symbolElement);
+            }
+            document.removeEventListener('keydown', keyPressListener);
+            nextStep();
+        }, displayTime);
     }
-  }
 
-  function endAttempt(success) {
-    clearTimeout(timeoutId);
-    if (success) {
-      successfulAttempts++;
+    function playAudio() {
+        const randomAudio = audios[getRandomInt(audios.length)];
+        const audioElement = document.getElementById(randomAudio.id);
+        audioElement.play();
+
+        let keyPressListener = (event) => {
+            if (event.key.toUpperCase() === randomAudio.key) {
+                score++;
+            } else {
+                score--;
+            }
+            updateScore();
+        };
+
+        document.addEventListener('keydown', keyPressListener, { once: true });
+
+        const audioDuration = 1000;
+        setTimeout(() => {
+            audioElement.pause();
+            audioElement.currentTime = 0;
+            document.removeEventListener('keydown', keyPressListener);
+            nextStep();
+        }, audioDuration);
     }
-    scoreElement.textContent = "Score: " + successfulAttempts;
-    document.removeEventListener('keydown', keyboardHandler);
-    setTimeout(startTask, 1000); // Wait for 1 second before starting the next attempt
-  }
 
-  function endTask() {
-    symbolElement.textContent = "Task completed!";
-    instructionElement.textContent = "Your final score is: " + successfulAttempts;
-    instructionElement.style.display = "block";
-  }
+    function nextStep() {
+        if (Date.now() - startTime > testDuration) {
+            alert(`Test completed! Your final score is: ${score}`);
+            return;
+        }
+        const isAudio = Math.random() < 0.5;
+        if (isAudio) {
+            playAudio();
+        } else {
+            showSymbol();
+        }
+    }
 
-  window.onload = startTask;
+    function updateScore() {
+        scoreElement.textContent = `Score: ${score}`;
+    }
+
+    nextStep();
