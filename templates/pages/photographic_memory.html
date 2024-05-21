@@ -26,10 +26,10 @@
 
         #quiz-container {
             text-align: center;
-            background-color: #f8f9fa;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
             max-width: 90%;
             width: 90%;
             height: 90vh;
@@ -57,14 +57,14 @@
             margin: 10px 0;
             padding: 10px;
             background-color: #ffffff;
-            border: 1px solid #cccccc;
+            border: 1px solid #ffffff;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         .option:hover {
-            background-color: #f9f9f9;
+            background-color: #ffffff;
         }
 
         .score {
@@ -93,5 +93,8 @@
         <div class="score"></div>
     </div>
     <script type="text/javascript" src="{{ url_for('static', filename='script/photographic_memory.js') }}"></script>
+<div id="container" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);">
+  <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
+</div>
 </body>
 {% endblock content %}

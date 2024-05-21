@@ -42,7 +42,6 @@
 </div>
 <form action="/results_listening" method="POST">
  <div class="center">
- <button type="submit" id="submit-button" class="btn btn-danger">Ukončit test</button>
  </div>
 
  <script>
@@ -765,5 +764,8 @@
 </tbody></table>
 </div>
 </form>
+<div id="container" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);">
+  <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
+</div>
 </body>
 {% endblock content %}

@@ -37,5 +37,7 @@
   </div>
 
   <script type="text/javascript" src="{{ url_for('static', filename='script/circles.js') }}"></script>
-
+<div id="container" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);">
+  <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
+</div>
 {% endblock content %}

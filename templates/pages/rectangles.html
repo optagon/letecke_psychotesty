@@ -3,7 +3,7 @@
 {% block content %}
 <head>
     <meta charset="UTF-8">
-    <title>P*S*Y*C*H*O</title>
+    <title>Signal test</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body style="background-color: black; text-align: center;">
@@ -32,7 +32,10 @@
   </div>
 
   <script type="text/javascript" src="{{ url_for('static', filename='script/rectangles.js') }}"></script>
-
+    <br><br><br>
+<div id="container" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);">
+  <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
+</div>
 </section>
 </body>
 {% endblock content %}

@@ -21,7 +21,7 @@
     </style>
 </head>
 <body>
-<h1>Psychotests ULZ</h1>
+<h1>Psychomotorický test</h1>
 <section>
     <header>
         {% block header %}{% endblock header %}
@@ -50,5 +50,9 @@
 
     </main>
 </section>
+<div id="container" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);">
+  <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
+</div>
+
 </body>
 {% endblock content %}

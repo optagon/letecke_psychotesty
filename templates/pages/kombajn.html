@@ -44,5 +44,8 @@
 <audio id="audio2" src="static/kombajn_sounds/audio2.mp3"></audio>
 
 <script type="text/javascript" src="{{ url_for('static', filename='script/kombajn.js') }}"></script>
+<div id="container" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);">
+  <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
+</div>
 </body>
 {% endblock content %}
