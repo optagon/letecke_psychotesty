@@ -7,16 +7,38 @@
     <style>
         body {
             background-color: #87ceeb;
-            color: white; /* Optionally, you can set the text color to white for better visibility */
-            display: flex; /* Use flexbox */
-            flex-direction: column; /* Align children vertically */
-            align-items: center; /* Center horizontally */
-            justify-content: center; /* Center vertically */
-            height: 100vh; /* Take full height of viewport */
+            color: white;
+            margin: 0; /* Remove default margin */
+            overflow: hidden; /* Prevent horizontal scrolling */
         }
+
+        #container {
+            width: 80%; /* Adjust width as needed */
+            max-width: 1200px; /* Set maximum width for larger screens */
+            margin: auto; /* Center the container horizontally */
+            margin-bottom: 20px; /* Add some space between elements */
+            text-align: center; /* Center the content horizontally */
+        }
+
         #scene-container {
-            width: 150%; /* Optionally, you can specify the width */
-            max-width: 150%; /* Optionally, you can specify a maximum width */
+            width: 80%; /* Adjust width as needed */
+            max-width: 1200px; /* Set maximum width for larger screens */
+            margin: auto; /* Center the container horizontally */
+            height: 60vh; /* Adjust height as needed */
+            background-color: rgba(0, 0, 0, 0.5); /* Optional: add some background color for visibility */
+        }
+
+        #myChart {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        select, button {
+            margin: 10px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -26,13 +48,12 @@
     <header>
         {% block header %}{% endblock header %}
     </header>
-    <main>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
+    <div id="container">
         <div id="container2">
-            <canvas id="myChart" style="width:100%"></canvas>
+            <canvas id="myChart"></canvas>
         </div>
-        <div id="container">
+        <div>
             <select id="timeSelect">
                 <option value="1" selected="selected">01:00</option>
                 <option value="5">05:00</option>
@@ -42,13 +63,13 @@
             <button id="startStopBtn">START</button>
             <p style="display: inline" id="timeInfo"><b>01:00</b></p>
         </div>
+    </div>
 
-        <div id="scene-container">
-            <!-- Your content here -->
-        </div>
-        <script type="module" src="{{ url_for('static', filename='script/pizza.js') }}"></script>
-
-    </main>
+    <div id="scene-container">
+        <!-- Your content here -->
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script type="module" src="{{ url_for('static', filename='script/pizza.js') }}"></script>
 </section>
 </body>
 {% endblock content %}
