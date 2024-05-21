@@ -46,10 +46,10 @@ class Controls {
 class Results {
     constructor(meshObject) {
         this.meshObject = meshObject;
+        this.resultsContainer = document.getElementById("results-container");
         this.canvas = document.getElementById("myChart");
-        this.canvas.hidden = true;
         this.nSamples = 0;
-        this.xx = []
+        this.xx = [];
         this.xvals = [];
         this.zvals = [];
         this.rotvals = [];
@@ -61,7 +61,6 @@ class Results {
         this.nSamples++;
         if (!(this.nSamples % 10)) {
             this.xx.push(" ");
-            //this.xx.push(Math.round(this.nSamples / 60));
             this.xvals.push(this.meshObject.worldPos('x') / 1.5);
             this.zvals.push(this.meshObject.worldPos('z') / 1.5);
             this.rotvals.push(this.meshObject.rotZ / (Math.PI / 3));
@@ -74,62 +73,54 @@ class Results {
         this.xvals = [];
         this.zvals = [];
         this.rotvals = [];
-        this.canvas.style.display = "none";
+        this.resultsContainer.style.display = "none";
     }
 
     drawGraphFirstTime() {
-        this.chart = new Chart("myChart", {
-                                type: "line",
-                                data: {
-                                    labels: this.xx,
-                                    datasets: [
-                                        {
-                                        label: "UP/DOWN DEVIATIONS",
-                                        data: movingAvg(this.zvals, 20),
-                                        borderColor: "red",
-                                        fill: false
-                                        },
-                                        {
-                                        label: "LEFT/RIGHT DEVIATIONS",
-                                        data: movingAvg(this.xvals, 20),
-                                        borderColor: "blue",
-                                        fill: false
-                                        },
-                                        {
-                                        label: "LEFT/RIGHT TILT",
-                                        data: movingAvg(this.rotvals, 20),
-                                        borderColor: "green",
-                                        fill: false
-                                        }
-                                    ]
-                                },
-                                options: {
-                                        scales: {
-                                          yAxes: {
-                                            display: true,
-                                            ticks: {
-                                              //beginAtZero: true,
-                                              min: -1,
-                                              steps: 21,
-                                              stepValue: 0.1,
-                                              max: 1
-                                            }
-                                          },
-                                          xAxes: {
-                                            display: false,
-                                            ticks: {
-                                              display: false
-                                            }
-                                          }
-                                        },
-                                }
+        this.chart = new Chart(this.canvas, {
+            type: "line",
+            data: {
+                labels: this.xx,
+                datasets: [
+                    {
+                        label: "UP/DOWN DEVIATIONS",
+                        data: movingAvg(this.zvals, 20),
+                        borderColor: "red",
+                        fill: false
+                    },
+                    {
+                        label: "LEFT/RIGHT DEVIATIONS",
+                        data: movingAvg(this.xvals, 20),
+                        borderColor: "blue",
+                        fill: false
+                    },
+                    {
+                        label: "LEFT/RIGHT TILT",
+                        data: movingAvg(this.rotvals, 20),
+                        borderColor: "green",
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        min: -1,
+                        max: 1
+                    },
+                    x: {
+                        display: false
+                    }
+                }
+            }
         });
         this.firstTime = false;
         console.log("chart should be visible");
     }
 
     drawGraph() {
-        this.canvas.style.display = "initial";
+        this.resultsContainer.style.display = "block";
         if (this.firstTime) {
             this.drawGraphFirstTime();
         } else {
