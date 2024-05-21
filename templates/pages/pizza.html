@@ -28,6 +28,22 @@
             background-color: rgba(0, 0, 0, 0.5); /* Optional: add some background color for visibility */
         }
 
+        #results-container {
+            position: fixed; /* Position it fixed so it floats over everything */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center it */
+            width: 80%; /* Adjust width as needed */
+            max-width: 1200px; /* Set maximum width */
+            background-color: rgba(0, 0, 0, 0.8); /* Optional: background color with transparency */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: white; /* Text color */
+            z-index: 1000; /* Ensure it is on top of other elements */
+            display: none; /* Initially hidden */
+        }
+
         #myChart {
             width: 100% !important;
             height: auto !important;
@@ -43,37 +59,36 @@
     </style>
 </head>
 <body>
-<h1>Psychomotorický test</h1>
-<section>
-    <header>
-        {% block header %}{% endblock header %}
-    </header>
+    <h1>Psychotests ULZ</h1>
+    <section>
+        <header>
+            {% block header %}{% endblock header %}
+        </header>
 
-    <div id="container">
-        <div id="container2">
+        <div id="container">
+            <div>
+                <select id="timeSelect">
+                    <option value="1" selected="selected">01:00</option>
+                    <option value="5">05:00</option>
+                    <option value="10">10:00</option>
+                    <option value="20">20:00</option>
+                </select>
+                <button id="startStopBtn">START</button>
+                <p style="display: inline" id="timeInfo"><b>01:00</b></p>
+            </div>
+        </div>
+
+        <div id="scene-container">
+            <!-- Your game content here -->
+        </div>
+
+        <div id="results-container">
             <canvas id="myChart"></canvas>
+            <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
         </div>
-        <div>
-            <select id="timeSelect">
-                <option value="1" selected="selected">01:00</option>
-                <option value="5">05:00</option>
-                <option value="10">10:00</option>
-                <option value="20">20:00</option>
-            </select>
-            <button id="startStopBtn">START</button>
-            <p style="display: inline" id="timeInfo"><b>01:00</b></p>
-        </div>
-    </div>
 
-    <div id="scene-container">
-        <!-- Your content here -->
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <script type="module" src="{{ url_for('static', filename='script/pizza.js') }}"></script>
-</section>
-<div id="container" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);">
-  <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
-</div>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script type="module" src="{{ url_for('static', filename='script/pizza.js') }}"></script>
+    </section>
 </body>
 {% endblock content %}
