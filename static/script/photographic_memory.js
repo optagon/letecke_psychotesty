@@ -11,7 +11,54 @@ const questions = [
         options: ['1', '2', '3'],
         correct: 1
     },
-    // Add 8 more question objects with img, question, options, and correct index
+    {
+        img: 'static/images/photo_memory/car.png',
+        question: 'Jaká barva vozidla nebyla na obrázku?',
+        options: ['modrá', 'žlutá', 'stříbrná'],
+        correct: 1
+    },
+        {
+        img: 'static/images/photo_memory/vozidla.png',
+        question: 'Kolik vozidel je na obrázku?',
+        options: ['3', '4', '6'],
+        correct: 1
+    },
+    {
+        img: 'static/images/photo_memory/vozidla.png',
+        question: 'Kolik vozidel je na obrázku?',
+        options: ['3', '4', '6'],
+        correct: 1
+    },
+    {
+        img: 'static/images/photo_memory/majak.png',
+        question: 'Jakou barvu má maják?',
+        options: ['červeno-žlutý', 'červeno-bílý', 'černo-bílý'],
+        correct: 2
+    },
+    {
+        img: 'static/images/photo_memory/fotbal.png',
+        question: 'Jakou barvu dresů neměl ani jeden tým na obrázku?',
+        options: ['oranžovo-bílý', 'modro-bílý', 'černo-bílý'],
+        correct: 2
+    },
+    {
+        img: 'static/images/photo_memory/kone.png',
+        question: 'Kolik je na obrázku koní?',
+        options: ['5', '6', '7'],
+        correct: 0
+    },
+    {
+        img: 'static/images/photo_memory/lod.png',
+        question: 'Jak se jmenuje loď na obrázku?',
+        options: ['S.S Hurricane Camille', 'S.S Hurricane Kathrina', 'S.S Gulfport'],
+        correct: 0
+    },
+    {
+        img: 'static/images/photo_memory/rybar.png',
+        question: 'Jakou barvu mají rukavice rybáře?',
+        options: ['černou', 'oranžovou', 'červenou'],
+        correct: 1
+    },
 ];
 
 let currentQuestion = 0;
@@ -61,7 +108,7 @@ function showScore() {
     pictureElement.style.display = 'none';
     questionElement.style.display = 'none';
     optionsElement.style.display = 'none';
-    scoreElement.textContent = `Your score: ${score} out of ${questions.length}`;
+    scoreElement.textContent = `Zodpovězeno správně ${score} z ${questions.length} otázek`;
     scoreElement.style.display = 'block';
 }
 
