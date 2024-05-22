@@ -59,7 +59,7 @@
             margin-bottom: 0;
         }
 
-        a[href="{{url_for('logout')}}"] {
+        a[href="{{url_for('auth.logout')}}"] {
             display: block;
             margin-top: 20px;
             color: #dc3545; /* Bootstrap danger color */
@@ -67,7 +67,8 @@
             transition: color 0.3s ease;
         }
 
-        a[href="{{url_for('logout')}}"]:hover {
+        a[href="{{url_for('auth.logout')}}"]:hover {
+        a[href="{{url_for('auth.logout')}}"]:hover {
             color: #bd2130; /* Darker shade of red */
         }
 

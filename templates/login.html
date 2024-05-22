@@ -85,7 +85,7 @@
 <body>
     <div class="container">
         <h2>Medical class 1 - Psychotesty</h2>
-        <form method="POST" action="{{ url_for('login') }}">
+        <form method="POST" action="{{ url_for('auth.login') }}">
             {{ form.hidden_tag() }}
             {{ form.username }}
             {{ form.password }}
