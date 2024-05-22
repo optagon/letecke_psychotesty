@@ -1,0 +1,7 @@
+/instance/
+*.db
+sql*
+*.exe
+venv
+venv.zip
+.idea
