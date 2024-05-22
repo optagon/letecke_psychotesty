@@ -1,43 +1,111 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <h2>{% block title %}Koncetrace{% endblock title %}</h2>
-{% endblock header %}
-
 {% block content %}
-<style>
-  body {
-    background-color: black;
-    color: white; /* Optionally, you can set the text color to white for better visibility */
-  }
-  #container {
-    margin: 0 auto; /* Center the div horizontally */
-    text-align: center; /* Center the content inside the div */
-  }
-</style>
 
-<br>
-  <div id="container">
-    <select id="timeSelect" onchange="timeSelectCb(this)">
-      <option selected>01:00</option>
-      <option>05:00</option>
-      <option>10:00</option>
-      <option>20:00</option>
-    </select>
-    <button id="startStopBtn" onclick="startStopBtnCb()">START</button>
-    <p id="timeInfo"><b>01:00</b></p>
-  </div>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background-color: black;
+            color: white; /* Optionally, you can set the text color to white for better visibility */
+            margin: 0; /* Remove default margin */
+            display: flex; /* Use flexbox for alignment */
+            flex-direction: column; /* Align children vertically */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            height: 100vh; /* Take full height of viewport */
+            overflow: hidden; /* Prevent scrolling */
+        }
 
-  <div id="container">
-    <button id="registerBtn" onclick="registerBtnCb(this)">DVA KROKY</button>
-  </div>
+        section {
+            margin-top: 70px; /* Adjust this value based on the height of your navbar */
+        }
 
-  <div id="container">
-    <canvas id="myCanvas" width="800" height="800"></canvas>
-  </div>
+        #settingsContainer {
+            text-align: center; /* Center the content inside the div */
+            margin-bottom: 20px; /* Add some space below the settings */
+        }
 
-  <script type="text/javascript" src="{{ url_for('static', filename='script/circles.js') }}"></script>
-<div id="container" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);">
-  <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
-</div>
+        #container {
+            text-align: center; /* Center the content inside the div */
+            margin-bottom: 20px; /* Add some space below the button */
+        }
+
+        #canvasContainer {
+            display: flex; /* Use flexbox for alignment */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            flex-grow: 1; /* Allow the container to grow and take up available space */
+            width: 100%; /* Take full width */
+            height: 100%; /* Take full height */
+        }
+
+        canvas {
+            max-width: 100%; /* Ensure the canvas does not exceed the width of the container */
+            max-height: 100%; /* Ensure the canvas does not exceed the height of the container */
+            width: auto; /* Adjust width automatically */
+            height: auto; /* Adjust height automatically */
+            /*border: 1px solid white; /* Optional: Add a border to the canvas for visibility */
+        }
+
+        #results-container {
+            position: fixed; /* Position it fixed so it floats over everything */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center it */
+            width: 60%; /* Adjust width as needed */
+            max-width: 1200px; /* Set maximum width */
+            background-color: rgba(94, 154, 164, 0.7); /* Optional: background color with transparency */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: white; /* Text color */
+            z-index: 1000; /* Ensure it is on top of other elements */
+            display: none; /* Initially hidden */
+            text-align: center;
+        }
+
+        #endTestButtonContainer {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center; /* Center the button horizontally */
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+
+        <div id="settingsContainer">
+            <select id="timeSelect" onchange="timeSelectCb(this)">
+                <option selected>01:00</option>
+                <option>05:00</option>
+                <option>10:00</option>
+                <option>20:00</option>
+            </select>
+            <button id="startStopBtn" onclick="startStopBtnCb()">START</button>
+            <p id="timeInfo"><b>01:00</b></p>
+        </div>
+
+        <div id="container">
+            <button id="registerBtn" onclick="registerBtnCb(this)">DVA KROKY</button>
+        </div>
+
+        <div id="canvasContainer">
+            <canvas id="myCanvas"></canvas>
+        </div>
+
+        <div id="results-container">
+            <p id="results-text"></p>
+            <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
+        </div>
+
+    </section>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='script/circles.js') }}"></script>
+</body>
+
 {% endblock content %}
