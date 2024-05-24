@@ -40,6 +40,7 @@ def Listening():
         list_of_results.append(result)
         tts = gtts.gTTS(str(kombinace), lang="cs")
         tts.save('./static/sounds/sound'+str(x)+'.mp3')
+        #tts.save('/home/psychotesty/letecke_psychotesty/static/sounds/sound'+str(x)+'.mp3') toto je potreba hot fixem zmenit v prod na Python Anywhere
 
     return [kombinace, list_of_results]
 
