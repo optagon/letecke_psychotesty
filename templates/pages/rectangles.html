@@ -5,6 +5,23 @@
     <meta charset="UTF-8">
     <title>Signal test</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        #results-container {
+            position: fixed; /* Position it fixed so it floats over everything */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center it */
+            width: 80%; /* Adjust width as needed */
+            max-width: 1200px; /* Set maximum width */
+            background-color: rgba(94, 154, 164, 0.7); /* Optional: background color with transparency */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: white; /* Text color */
+            z-index: 1000; /* Ensure it is on top of other elements */
+            display: none; /* Initially hidden */
+        }
+    </style>
 </head>
 <body style="background-color: black; text-align: center;">
 <h1 style="color: white;">SIGNAL</h1>
@@ -31,11 +48,14 @@
     <canvas id="myCanvas" width="1200" height="600"></canvas>
   </div>
 
+
+  <div id="results-container">
+    <p id="results-text"></p>
+    <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
+  </div>
   <script type="text/javascript" src="{{ url_for('static', filename='script/rectangles.js') }}"></script>
-    <br><br><br>
-<div id="container" style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);">
-  <a class="btn btn-outline-danger" href="{{ url_for('index') }}">Ukončit test</a>
-</div>
+  <br><br><br>
+
 </section>
 </body>
 {% endblock content %}

@@ -167,6 +167,8 @@ class Display {
 class Results {
 
     constructor() {
+        this.resultsContainer = document.getElementById("results-container");
+        this.resultsText = document.getElementById("results-text");
         this.n_generated_rects = 0;
         this.correct_registers = 0;
         this.incorrect_registers = 0;
@@ -178,6 +180,13 @@ class Results {
         this.correct_registers = 0;
         this.incorrect_registers = 0;
         this.newRectFlag = false;
+    }
+
+    draw() {
+        console.log(this.toString());
+        console.log("SHOWING TEH RESULTS!");
+        this.resultsContainer.style.display = "block";
+        this.resultsText.innerHTML = this.toString();
     }
 
     userRegister() {
@@ -198,10 +207,11 @@ class Results {
     }
 
     toString() {
-        let s = "";
-        s = s + "Number of rectangles: " + this.n_generated_rects;
-        s = s + "\nCorrect hits: " + this.correct_registers;
-        s = s + "\nIncorrect hits: " + this.incorrect_registers;
+        let s = "Results: <br>";
+        s = s + "Number of generated rectangles: " + this.n_generated_rects + "<br>";
+        s = s + "\nCorrect hits: " + this.correct_registers + "<br>";
+        s = s + "\nIncorrect hits: " + this.incorrect_registers + "<br>";
+        s = s + "\nMissed rectangles: " + (this.n_generated_rects - this.correct_registers) + "<br>";
         return s;
     }
 }
@@ -231,10 +241,12 @@ class Game {
 
     stopGame() {
         this.running = false;
-        this.controls.setStateIdle();
+        // controls dont need to be enabled because now the pop up will lead you to paradise
+        //this.controls.setStateIdle();
         this.controls.writeTimeString(this.timer.timeLimit / 1000);
-        this.display.printResults(this.results.toString());
         clearInterval(this.fireInterval);
+        this.results.draw();
+        //this.display.printResults(this.results.toString());
     }
 
     gameStep(display, grid, timer, controls, results) {
