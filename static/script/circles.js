@@ -18,8 +18,8 @@ function getCanvasCenter(canvas) {
 }
 
 function resizeCanvas() {
-  display.canvas.width = window.innerWidth / 2;
-  display.canvas.height = window.innerHeight / 2;
+  display.canvas.width = window.innerWidth * 0.6;
+  display.canvas.height = window.innerHeight * 0.6;
   console.log("canvas resized to: " + display.canvas.width + " " + display.canvas.height);
   display.redraw();
 }
@@ -56,7 +56,7 @@ const display = {
 
   drawCircles: function(nFilled) {
     canvasCenter = getCanvasCenter(this.canvas);
-    const bradius = canvasCenter.x * 1 / 2;
+    const bradius = canvasCenter.x * 0.5 - 50;
     let circumference = 2 * Math.PI * bradius;
     let sradius = (circumference - nCircles * circOffset) / nCircles / 2;
 
@@ -108,6 +108,12 @@ const controls = {
     this.startStopBtn.innerHTML = "START";
   },
 
+  disableAll: function () {
+    this.timeSelect.disabled = true;
+    this.registerBtn.disabled = true;
+    this.startStopBtn.disabled = true;
+  },
+
   writeTimeString: function(nSeconds) {
     secs = nSeconds % 60;
     mins = Math.floor(nSeconds / 60);
@@ -127,7 +133,9 @@ const controls = {
 function startStopBtnCb() {
   if (run) {     // stop the run
     clearInterval(currInterval);
-    controls.runFinished();
+    // with pop up no need to rejuvenate
+    //controls.runFinished();
+    controls.disableAll();
     game.showResults();
     elapsedTime = 0;
     run = false;
@@ -200,10 +208,12 @@ const resultStats = {
   },
 
   toString: function() {
-    let str = "SKIPS: " + this.nSkippings;
-    str = str + "\nCorrect registers: " + this.correctlyRegistered;
-    str = str + "\nIncorrect registers: " + this.incorrectlyRegistered;
-    return str
+    let s = "Results: <br>";
+    s = s + "Number of skips: " + this.nSkippings + " <br>";
+    s = s + "Correct hits: " + this.correctlyRegistered + " <br>";
+    s = s + "Incorrect hits: " + this.incorrectlyRegistered + " <br>";
+    s = s + "Missed skips: " + (this.nSkippings - this.correctlyRegistered) + " <br>";
+    return s
   }
 
 }
@@ -213,6 +223,8 @@ const game = {
   controls: controls,
   results: resultStats,
   displayer: display,
+  resultElement: document.getElementById("results-container"),
+  resultText: document.getElementById("results-text"),
 
   initialize: function() {
     this.displayer.initialize();
@@ -255,7 +267,8 @@ const game = {
   },
 
   showResults: function() {
-    this.displayer.printResults(this.results.toString());
+    this.resultElement.style.display = "block";
+    this.resultText.innerHTML = this.results.toString();
   }
 
 }
@@ -269,5 +282,11 @@ var skipProb = 0.2;
 var skipping = false;
 
 run = Boolean(false);
+/*window.addEventListener('resize', resizeCanvas, false);
+game.initialize();*/
+
 window.addEventListener('resize', resizeCanvas, false);
-game.initialize();
+document.addEventListener('DOMContentLoaded', (event) => {
+  resizeCanvas();
+  game.initialize();
+});
