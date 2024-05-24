@@ -18,7 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-app.config['SECRET_KEY'] = 'thisissecretkey'
+app.config['SECRET_KEY'] = 'flaps15positiverategearup'
 SESSION_TYPE = "redis"
 PERMANENT_SESSION_LIFETIME = 1800
 
@@ -28,7 +28,7 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return Users.query.get(int(user_id))
 
 app.config.update(SECRET_KEY=os.urandom(24))
 
@@ -40,29 +40,17 @@ with app.app_context():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return Users.query.get(int(user_id))
 
 #user DB
-class User(db.Model, UserMixin):
+class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
+    valid_from = db.Column(db.Date, nullable=False)
+    valid_to = db.Column(db.Date, nullable=False)
 
-class RegisterForm(FlaskForm):
-    username = StringField(validators=[
-                           InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Přihlašovací jméno"})
 
-    password = PasswordField(validators=[
-                             InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Heslo"})
-
-    submit = SubmitField('Register')
-
-    def validate_username(self, username):
-        existing_user_username = User.query.filter_by(
-            username=username.data).first()
-        if existing_user_username:
-            raise ValidationError(
-                'That username already exists. Please choose a different one.')
 
 class LoginForm(FlaskForm):
     username = StringField(validators=[
@@ -78,7 +66,7 @@ class LoginForm(FlaskForm):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = Users.query.filter_by(username=form.username.data).first()
         if user:
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
@@ -330,61 +318,12 @@ def get_stats():
 
     return ret
 
-# grid
-SYMBOLS = ['*', '#', '$', '&', '@']
-GRID_SIZE = 12
-
-def generate_grid():
-    """Generate a random grid of symbols."""
-    grid = [[random.choice(SYMBOLS) for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
-    return grid
-
-def get_symbol_location(grid):
-    """Get the location of the symbol displayed to the user."""
-    row = random.randint(0, GRID_SIZE - 1)
-    col = random.randint(0, GRID_SIZE - 1)
-    symbol = grid[row][col]
-    return row, col, symbol
-
 
 @app.route('/photo_memory', methods=['GET', 'POST'])
 @login_required
 def photographic_memory():
     # Render play template with grid
     return render_template('pages/photographic_memory.html')
-
-
-#IQ
-
-iqs = [
-    {"question": " 2, 1, (1/2), (1/4), ...", "answer": "1/8"},
-    {"question": " 7, 10, 8, 11, 9, 12, ...", "answer": "10"},
-    {"question": " 36, 34, 30, 28, 24, ...", "answer": "22"},
-    {"question": " 22, 21, 23, 22, 24, 23, ...", "answer": "25"},
-    {"question": " 53, 53, 40, 40, 27, 27, ... ", "answer": "14"},
-    {"question": " 21, 9, 21, 11, 21, 13, 21, ...", "answer": "15"},
-    {"question": " 58, 52, 46, 40, 34, ...", "answer": "28"},
-    {"question": " 3, 4, 7, 8, 11, 12, ...", "answer": "10"},
-    {"question": " 8, 22, 8, 28, 8, ...", "answer": "34"},
-    {"question": " 31, 29, 24, 22, 17, ... ", "answer": "15"},
-    {"question": " 1.5, 2.3, 3.1, 3.9, ...", "answer": "4.7"},
-    {"question": " 14, 28, 20, 40, 32, 64, ...", "answer": "56"},
-    {"question": " 2, 4, 6, 8, 10, ...  ", "answer": "12"},
-    {"question": " 201, 202, 204, 207, ...", "answer": "208"},
-    {"question": " 544, 509, 474, 439, ...", "answer": "404"},
-    {"question": " 80, 10, 70, 15, 60, ...", "answer": "20"},
-    {"question": " 2, 6, 18, 54, ... ", "answer": "162"},
-    {"question": " 5.2, 4.8, 4.4, 4, ...", "answer": "3.6"},
-    {"question": " 8, 6, 9, 23, 87 , ... ", "answer": "429"}
-
-
-
-]
-
-# Global variables to keep track of user's score
-correct_answers = 0
-incorrect_answers = 0
-iq_final_score = 0
 
 
 @app.route('/iq')

@@ -194,15 +194,15 @@ const resultStats = {
   },
 
   print: function() {
-    console.log("Number of skips: " + this.nSkippings);
-    console.log("Correct registers: " + this.correctlyRegistered);
-    console.log("Incorrect registers: " + this.incorrectlyRegistered);
+    console.log("Celkový počet skoků: " + this.nSkippings);
+    console.log("Správných zaznamenání: " + this.correctlyRegistered);
+    console.log("Chybných zaznamenání: " + this.incorrectlyRegistered);
   },
 
   toString: function() {
-    let str = "SKIPS: " + this.nSkippings;
-    str = str + "\nCorrect registers: " + this.correctlyRegistered;
-    str = str + "\nIncorrect registers: " + this.incorrectlyRegistered;
+    let str = "" + this.nSkippings;
+    str = str + "\nSprávných zaznamenání " + this.correctlyRegistered;
+    str = str + "\nNesprávných zaznamenání: " + this.incorrectlyRegistered;
     return str
   }
 
@@ -241,8 +241,8 @@ const game = {
 
   gameStep: function() {
     elapsedTime++;
-    console.log("limit " + timeLimit)
-    console.log("elapsed " + elapsedTime)
+    console.log("časový limit " + timeLimit)
+    console.log("uběhnutý čas " + elapsedTime)
     controls.writeTimeString(timeLimit - elapsedTime);
 
     if ((timeLimit - elapsedTime) <= 0) {
