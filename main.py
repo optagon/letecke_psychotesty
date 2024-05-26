@@ -11,9 +11,6 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 
-from auth import auth as auth_blueprint
-from models import db, User
-
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -157,134 +154,6 @@ def results_listening():
     return render_template("pages/results_listening.html", user_inputs=user_inputs, combinations=list_of_results, final_result=final_result, success_msg=success_msg)
 
 
-
-import flask
-from flask import request
-from collections import OrderedDict
-import random
-from datetime import datetime
-
-
-cmap = OrderedDict()
-cmap[0] = "c000"
-cmap[1] = "c023"
-cmap[2] = "c045"
-cmap[3] = "c068"
-cmap[4] = "c090"
-cmap[5] = "c113"
-cmap[6] = "c135"
-cmap[7] = "c158"
-cmap[8] = "c180"
-cmap[9] = "c203"
-cmap[10] = "c225"
-cmap[11] = "c248"
-cmap[12] = "c270"
-cmap[13] = "c293"
-cmap[14] = "c315"
-cmap[15] = "c338"
-
-ONE_STEP_PROB = 0.90
-cntr_circles = 0
-cntr_two_steps = 0
-cntr_two_steps_user_ok = 0
-cntr_two_steps_user_nok = 0
-two_step = False
-
-
-@app.route("/concentration_circle")
-@login_required
-def concentration_circle():
-    return flask.render_template('pages/concentration_circle.html')
-
-
-
-@app.route('/highlight_id')
-@login_required
-def highlight_id():
-    global cntr_circles
-    global cmap
-    global two_step
-    global cntr_two_steps
-
-    cntr_old = cntr_circles
-    two_step = False
-
-    if random.random() > ONE_STEP_PROB:
-        # two steps
-        two_step = True
-        cntr_two_steps += 1
-        if (cntr_circles + 2) > max(list(cmap.keys())):
-            cntr_circles = 0
-        else:
-            cntr_circles += 2
-    else:
-        # one step
-        if (cntr_circles + 1) > max(list(cmap.keys())):
-            cntr_circles = 0
-        else:
-            cntr_circles += 1
-
-    print('returning ' + cmap[cntr_old] + " -> " + cmap[cntr_circles] + "(" + str(two_step) + ")")
-    return cmap[cntr_old] + " " + cmap[cntr_circles] + " " + str(two_step)
-
-
-@app.route('/register_two_step', methods=['POST'])
-@login_required
-def register_two_step():
-    global two_step
-    global cntr_two_steps
-    global cntr_two_steps_user_ok
-    global cntr_two_steps_user_nok
-
-    req_data = request.get_data().decode()
-    # if req_data != "":
-    #     print('Something wrong happened, received post request {} instead of \'\''.format(req_data))
-    #     return "NOK"
-
-    print('Registered two step [{}, {}]'.format(datetime.now().isoformat(), req_data))
-    if two_step:
-        cntr_two_steps_user_ok += 1
-    else:
-        cntr_two_steps_user_nok += 1
-
-    ret = {
-        'total': cntr_two_steps,
-        'ok': cntr_two_steps_user_ok,
-        'nok': cntr_two_steps_user_nok
-    }
-
-    return ret
-
-
-@app.route('/reset_counters', methods=['POST'])
-@login_required
-def reset_counters():
-    global cntr_two_steps
-    global cntr_two_steps_user_ok
-    global cntr_two_steps_user_nok
-
-    cntr_two_steps = 0
-    cntr_two_steps_user_ok = 0
-    cntr_two_steps_user_nok = 0
-
-    return "counters reset"
-
-
-@app.route('/get_stats')
-@login_required
-def get_stats():
-    global cntr_two_steps
-    global cntr_two_steps_user_ok
-    global cntr_two_steps_user_nok
-
-    ret = {
-        'total': cntr_two_steps,
-        'ok': cntr_two_steps_user_ok,
-        'nok': cntr_two_steps_user_nok
-    }
-
-    return ret
-
 # grid
 SYMBOLS = ['*', '#', '$', '&', '@']
 GRID_SIZE = 12
@@ -310,7 +179,7 @@ def photographic_memory():
 
 
 #IQ
-
+# TODO this needs to be moved elsewhere
 iqs = [
     {"question": " 2, 1, (1/2), (1/4), ...", "answer": "1/8"},
     {"question": " 7, 10, 8, 11, 9, 12, ...", "answer": "10"},
